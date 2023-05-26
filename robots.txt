@@ -1,4 +1,4 @@
 User-agent: *
 Disallow:
 
-Sitemap: https://lafengxiaoyu.github.io/zhenyu//sitemap.xml
+Sitemap: https://lafengxiaoyu.github.io/sitemap.xml
