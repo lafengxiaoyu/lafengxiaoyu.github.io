@@ -1121,3 +1121,108 @@ nav[data-toggle="toc"] {
     }
   }
 }
+
+/* Guestbook Form */
+.guestbook-form {
+  max-width: 600px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background-color: var(--global-bg-color);
+  border: 1px solid var(--global-divider-color);
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+
+  .form-group {
+    margin-bottom: 1.5rem;
+
+    label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: 600;
+      color: var(--global-text-color);
+    }
+
+    input[type="text"],
+    input[type="email"],
+    textarea {
+      width: 100%;
+      padding: 0.75rem;
+      border: 1px solid var(--global-divider-color);
+      border-radius: 4px;
+      font-size: 1rem;
+      background-color: var(--code-bg);
+      color: var(--global-text-color);
+      transition: border-color 0.3s, box-shadow 0.3s;
+
+      &:focus {
+        outline: none;
+        border-color: var(--global-theme-color);
+        box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
+      }
+
+      &::placeholder {
+        color: var(--global-muted-text);
+      }
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 120px;
+    }
+
+    &.math-challenge {
+      background-color: rgba(0, 123, 255, 0.05);
+      padding: 1rem;
+      border-radius: 4px;
+      border-left: 4px solid var(--global-theme-color);
+    }
+  }
+
+  .btn-primary {
+    width: 100%;
+    padding: 0.875rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+    background-color: var(--global-theme-color);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+
+    &:hover {
+      background-color: var(--global-hover-color);
+      transform: translateY(-2px);
+    }
+
+    &:active {
+      transform: translateY(0);
+    }
+  }
+}
+
+.form-note {
+  max-width: 600px;
+  margin: 1rem auto;
+  padding: 0.75rem 2rem;
+  text-align: center;
+  color: var(--global-muted-text);
+}
+
+.visitor-map-container {
+  text-align: center;
+  margin: 2rem 0;
+
+  img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 4px;
+  }
+}
+
+.map-note {
+  text-align: center;
+  margin-top: 0.5rem;
+  color: var(--global-muted-text);
+}
+

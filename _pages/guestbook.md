@@ -11,6 +11,85 @@ Welcome to my guestbook! Feel free to leave a message and let me know you stoppe
 
 ---
 
+## Leave a Message
+
+Feel free to share your thoughts, questions, or just say hello! Your message will be sent directly to me via email.
+
+<form
+  action="https://formspree.io/f/mzdjzqbw"
+  method="POST"
+  class="guestbook-form"
+>
+  <!-- Honeypot field to prevent spam -->
+  <input type="text" name="_honey" style="display:none">
+
+  <!-- Disable captcha -->
+  <input type="hidden" name="_captcha" value="false">
+
+  <!-- Subject -->
+  <input type="hidden" name="_subject" value="Guestbook Message from Website">
+
+  <div class="form-group">
+    <label for="name">Name *</label>
+    <input
+      type="text"
+      id="name"
+      name="name"
+      required
+      placeholder="Your name"
+      minlength="2"
+      maxlength="50"
+    >
+  </div>
+
+  <div class="form-group">
+    <label for="email">Email</label>
+    <input
+      type="email"
+      id="email"
+      name="email"
+      placeholder="your.email@example.com (optional)"
+    >
+  </div>
+
+  <div class="form-group">
+    <label for="message">Message *</label>
+    <textarea
+      id="message"
+      name="message"
+      required
+      rows="5"
+      placeholder="Write your message here..."
+      minlength="10"
+      maxlength="1000"
+    ></textarea>
+  </div>
+
+  <!-- Math challenge for spam prevention -->
+  <div class="form-group math-challenge">
+    <label for="math-answer">Spam Check: What is 3 + 4? *</label>
+    <input
+      type="text"
+      id="math-answer"
+      name="math_answer"
+      required
+      placeholder="Enter the answer"
+      pattern="7"
+      title="Please solve: 3 + 4 = 7"
+    >
+  </div>
+
+  <button type="submit" class="btn btn-primary">Send Message</button>
+</form>
+
+<div class="form-note">
+  <small>
+    * Required fields | Your email will only be used to reply to your message and will not be shared with third parties.
+  </small>
+</div>
+
+---
+
 ## Visitor Map
 
 See where visitors to this site are coming from:
@@ -29,15 +108,18 @@ See where visitors to this site are coming from:
 
 ## Connect with Me
 
-If you'd like to get in touch, you can:
+You can also connect with me through:
 
-- **Connect with me** on [LinkedIn](https://linkedin.com/in/gaozhenyu/)
-- **Create an issue** on [GitHub](https://github.com/lafengxiaoyu/lafengxiaoyu.github.io/issues)
+- **LinkedIn**: [Connect with me](https://linkedin.com/in/gaozhenyu/)
+- **GitHub**: [Create an issue](https://github.com/lafengxiaoyu/lafengxiaoyu.github.io/issues)
 
 ---
 
 ## Guestbook Policy
 
-This is a static site, so comments are not enabled directly. However, your visit is tracked and shown on the visitor map above.
+- Please be respectful and keep messages civil
+- Spam, advertisements, or inappropriate content will be filtered
+- Messages are sent directly to my email: 786424908@qq.com
+- Your IP address may be logged for security purposes
 
 Thank you for visiting!
