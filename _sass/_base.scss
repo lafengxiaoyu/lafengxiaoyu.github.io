@@ -539,6 +539,37 @@ footer.sticky-bottom {
   }
 }
 
+// Project card layout
+.project-card {
+  .project-img-container {
+    width: 200px;
+    flex-shrink: 0;
+    overflow: hidden;
+
+    img {
+      width: 200px;
+      height: 150px;
+      object-fit: cover;
+    }
+  }
+
+  .project-content {
+    flex: 1;
+    min-width: 0;
+  }
+
+  @media (max-width: 576px) {
+    .project-img-container {
+      width: 120px;
+
+      img {
+        width: 120px;
+        height: 90px;
+      }
+    }
+  }
+}
+
 
 // Publications
 
