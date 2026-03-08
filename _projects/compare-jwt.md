@@ -5,7 +5,8 @@ permalink: /projects/compare-jwt
 date: 2026-03-01
 description: Security-focused tool for comparing JWT tokens across environments or Git commits.
 github: https://github.com/lafengxiaoyu/compare-jwt
-img: /assets/img/projects/compare-jwt/截屏2026-03-08 11.08.41.png
+img: assets/img/projects/compare-jwt/截屏2026-03-08 11.08.41.png
+importance: 2
 ---
 
 A powerful web application for comparing JWT files or tracking JWT changes across Git commits, with support for multiple report formats.

@@ -5,7 +5,8 @@ permalink: /projects/neat-ensembles
 date: 2022-01-01
 description: Research project applying ECOC-NEAT for improved multiclass classification using neural evolution.
 github: https://github.com/lafengxiaoyu/NEAT-ensembles
-img: /assets/img/projects/neat-ensembles/ECOCNEAT.png
+img: assets/img/projects/neat-ensembles/ECOCNEAT.png
+importance: 3
 ---
 
 A research project supporting my master's thesis on neural evolution and multiclass classification.
