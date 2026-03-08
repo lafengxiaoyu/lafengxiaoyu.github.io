@@ -1,0 +1,163 @@
+---
+layout: post
+title: "矩阵权（Matrix weighted）Bezier三角（曲面）片"
+date: 2026-03-08 12:00:00 +0800
+categories: CAGD Bezier 曲面
+---
+
+参考文献仍然是杨老师的这篇
+> Matrix weighted rational curves and surfaces
+
+文章，结合上篇博文中的算法，再次将其引申到三角面片上
+
+## 算法描述
+
+假设 $P_{i,j,k}, 0\leq i,j,k\leq n, i+j+k=n$ 是给定的控制点，并且 $M_{ijk}$ 是对应的加权矩阵。矩阵权有理三角面片由下式定义
+
+\[
+Q_3(u,v,w)=[\sum_{i+j+k=n}M_{ijk}B^n_{i,j,k}(u,v,w)]^{-1}\sum_{i+j+k=n}M_{ijk}P_{i,j,k}B^n_{i,j,k}(u,v,w)
+\]
+
+其中 $(u,v)\in[u_{k_1}-1,u_{m+1}]\times[v_{k_2-1},v_{n+1}]$，$B^n_{i,j,k}(u,v,w)=\frac{n!}{i!j!k!}$ 是定义在三角域上的 Bernstein 基函数。
+
+## 代码实现
+
+用 matlab 编写的如下程序为实现函数 `wm_tri.m`
+
+```matlab
+function trepBer = wm_tri( controls,num,M,N )
+%WM_TRI Summary of this function goes here
+%   Detailed explanation goes here
+points=cell(num,num);
+for i=1:num
+    for j=1:i
+        points{i,j}=[(j-1)*(1/(num-1)),1-(i-1)*(1/(num-1)),(i-j)*(1/(num-1))];
+    end
+end
+
+n=size(controls,1);
+
+Bpoints=cell(num,num);
+for i=1:num
+    for j=1:i
+        Bpoints{i,j}=[0;0;0];
+        tempM=zeros(3);
+        for u=1:n
+            for v=1:u
+                %i=v-1;j=n-u;k=u-v
+                tempM=tempM+M{u+v-1}*factorial(n-1)/(factorial(v-1)*factorial(n-u)*factorial(u-v))*(points{i,j}(1)^(v-1)*points{i,j}(2)^(n-u)*points{i,j}(3)^(u-v));
+                Bpoints{i,j}=Bpoints{i,j}+M{u+v-1}*controls{u,v}'*factorial(n-1)/(factorial(v-1)*factorial(n-u)*factorial(u-v))*(points{i,j}(1)^(v-1)*points{i,j}(2)^(n-u)*points{i,j}(3)^(u-v));
+            end
+        end
+        Bpoints{i,j}=(tempM\Bpoints{i,j})';
+    end
+end
+
+triConPoi=zeros(n*(n+1)/2,3);
+temp=1;
+for i=1:n
+    for j=1:i
+       triConPoi(temp,:)=controls{i,j};
+       temp=temp+1;
+    end
+end
+
+triConSur=zeros((n-1)^2,3);
+temp=1;
+for i=2:n%the first in the i-th line is n(n-1)/2
+    for j=1:i-1
+        %Counter clockwise order,up triangle
+        triConSur(temp,:)=[i*(i-1)/2+j,i*(i-1)/2+j+1,i*(i-1)/2+j+1-i];
+        temp=temp+1;
+    end
+end
+for i=2:n-1%the first in the i-th line is n(n-1)/2
+    for j=1:i-1
+        %Counter clockwise order,down triangle
+        triConSur(temp,:)=[i*(i-1)/2+j+1,i*(i-1)/2+j,i*(i-1)/2+j+1+i];
+        temp=temp+1;
+    end
+end
+trepCon=triangulation(triConSur,triConPoi);
+
+triBezPoi=zeros(n*(n+1)/2,3);
+temp=1;
+for i=1:num
+    for j=1:i
+       triBezPoi(temp,:)=Bpoints{i,j};
+       temp=temp+1;
+    end
+end
+triBerSur=zeros((num-1)^2,3);
+temp=1;
+for i=2:num%the first in the i-th line is n(n-1)/2
+    for j=1:i-1
+        %Counter clockwise order,up triangle
+        triBerSur(temp,:)=[i*(i-1)/2+j,i*(i-1)/2+j+1,i*(i-1)/2+j+1-i];
+        temp=temp+1;
+    end
+end
+for i=2:num-1%the first in the i-th line is n(n-1)/2
+    for j=1:i-1
+        %Counter clockwise order,down triangle
+        triBerSur(temp,:)=[i*(i-1)/2+j+1,i*(i-1)/2+j,i*(i-1)/2+j+1+i];
+        temp=temp+1;
+    end
+end
+trepBer=triangulation(triBerSur,triBezPoi);
+
+trisurf(trepCon,'edgecolor','k','FaceColor', 'interp');alpha(.2);axis equal;hold on;
+trisurf(trepBer,'edgecolor','none','FaceColor', 'interp');alpha(.9);hold on;
+for i=1:3
+quiver3(triConPoi(i,1),triConPoi(i,2),triConPoi(i,3),N(i,1),N(i,2),N(i,3),'r','filled','LineWidth',2);hold on;
+end
+
+end
+```
+
+## 示例
+
+下面绘制一个瞅瞅哈
+
+```matlab
+controls = cell(2,2);
+controls{1,1}=[0,0,0];
+controls{2,1}=[0.5,1,-0.2];controls{2,2}=[-0.4,0.9,0.1];
+
+N=[0.1,-0.3,0.6;0.4,0.3,0.6;-0.3,0.4,0.4];
+
+omega=ones(3,1);
+niu=ones(3,1);
+M=cell(3,1);
+
+for i=1:3
+S=sqrt(N(i,1)^2+N(i,2)^2+N(i,3)^2);
+N(i,1)=N(i,1)/S;
+N(i,2)=N(i,2)/S;
+N(i,3)=N(i,3)/S;
+end
+
+I=[1 0 0;0 1 0;0 0 1];
+for i=1:3
+M{i}=omega(i)*(I+niu(i)*N(i,:)'*N(i,:));
+end
+
+trepBer = wm_tri( controls,30,M,N);
+```
+
+## 结果展示
+
+<figure>
+  <img src="https://img-blog.csdn.net/20171025101054014?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvbGFmZW5neGlhb3l1/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="矩阵权Bezier三角曲面片示例" />
+  <figcaption>矩阵权Bezier三角曲面片示例</figcaption>
+</figure>
+
+## 再来一个例子
+
+来一整个模型瞅瞅，比如说人脸的例子
+
+|原本的网格|Bezier曲面片|
+|:-------------:|:-------------:|
+|<img src="https://img-blog.csdn.net/20171025103123542?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvbGFmZW5neGlhb3l1/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="原始网格" />| <img src="https://img-blog.csdn.net/20171025102752698?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvbGFmZW5neGlhb3l1/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="Bezier曲面片" />|
+
+老铁没毛病
