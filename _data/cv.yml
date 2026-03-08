@@ -13,7 +13,7 @@
       institution: Vrije Universiteit Amsterdam (VU Amsterdam), Amsterdam, Netherlands
       year: 2018 - 2020
       description:
-        - GPA: 7.8/10
+        - "GPA: 7.8/10"
         - Focus on artificial intelligence and socially aware systems
     - title: Master's in Mathematics
       institution: Zhejiang University, Hangzhou, China
@@ -91,7 +91,7 @@
         - IBM MQ Developer Essentials
     - year: 2021
       items:
-        - Spring Integration: Getting Started
+        - "Spring Integration: Getting Started"
     - year: 2020
       items:
         - Applied AI with DeepLearning - Coursera

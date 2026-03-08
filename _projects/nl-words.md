@@ -1,6 +1,6 @@
 ---
 layout: page
-title: "NL Words - 荷兰语单词学习应用"
+title: "NL Words - Dutch Vocabulary Learning App"
 description: A modern Dutch vocabulary learning platform with interactive cards and progress tracking.
 img: assets/img/projects/nl-words/截屏2026-03-08 11.02.36.png
 importance: 1

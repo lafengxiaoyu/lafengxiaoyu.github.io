@@ -1,6 +1,6 @@
 ---
 layout: page
-title: "NEAT-ensembles - NEAT-based Multiclass Classification"
+title: "NEAT-ensembles - Multiclass Classification with NEAT"
 description: Research project applying ECOC-NEAT for improved multiclass classification using neural evolution.
 img: assets/img/projects/neat-ensembles/ECOCNEAT.png
 importance: 3

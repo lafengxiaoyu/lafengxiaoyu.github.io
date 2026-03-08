@@ -1,6 +1,6 @@
 ---
 layout: page
-title: "Compare JWT - JWT对比工具"
+title: "Compare JWT - JWT Comparison Tool"
 description: Security-focused tool for comparing JWT tokens across environments or Git commits.
 img: assets/img/projects/compare-jwt/截屏2026-03-08 11.08.41.png
 importance: 2
