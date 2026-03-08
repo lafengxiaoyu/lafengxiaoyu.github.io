@@ -148,7 +148,7 @@ trepBer = wm_tri( controls,30,M,N);
 ## Results
 
 <figure>
-  <img src="https://img-blog.csdn.net/20171025101054014?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvbGFmZW5neGlhb3l1/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="Matrix Weighted Bezier Triangle Patch Example" />
+  <img src="/assets/img/blog/bezier-triangle-example.png" alt="Matrix Weighted Bezier Triangle Patch Example" />
   <figcaption>Matrix Weighted Bezier Triangle Patch Example</figcaption>
 </figure>
 
@@ -158,6 +158,6 @@ Let's look at a whole model, for example, a face model
 
 |Original Mesh|Bezier Surface Patch|
 |:-------------:|:-------------:|
-|<img src="https://img-blog.csdn.net/20171025103123542?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvbGFmZW5neGlhb3l1/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="Original Mesh" />| <img src="https://img-blog.csdn.net/20171025102752698?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvbGFmZW5neGlhb3l1/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="Bezier Surface Patch" />|
+|<img src="/assets/img/blog/original-mesh.png" alt="Original Mesh" />| <img src="/assets/img/blog/bezier-surface-patch.png" alt="Bezier Surface Patch" />|
 
 Everything looks good!
