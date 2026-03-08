@@ -78,11 +78,23 @@
         - AI integration in systems
 
 - title: Certifications
-  type: list
+  type: time_table
   contents:
-    - Red Hat OpenShift Administration III: Scaling Deployments in the Enterprise (DO380) - May 2025
-    - Blue Security Champion - ING, May 2023
-    - IBM MQ Developer Essentials - November 2022
-    - Spring Integration: Getting Started - November 2021
-    - Applied AI with DeepLearning - Coursera, January 2020
-    - Neural Networks and Deep Learning - Coursera, November 2019
+    - year: 2025
+      items:
+        - Red Hat OpenShift Administration III: Scaling Deployments in the Enterprise (DO380)
+    - year: 2023
+      items:
+        - Blue Security Champion - ING
+    - year: 2022
+      items:
+        - IBM MQ Developer Essentials
+    - year: 2021
+      items:
+        - Spring Integration: Getting Started
+    - year: 2020
+      items:
+        - Applied AI with DeepLearning - Coursera
+    - year: 2019
+      items:
+        - Neural Networks and Deep Learning - Coursera
