@@ -159,10 +159,9 @@ disqus_shortname: al-folio # put your disqus shortname
 # External sources.
 # If you have blog posts published on medium.com or other external sources,
 # you can display them in your blog by adding a link to the RSS feed.
-# Temporarily disabled due to CSDN RSS feed access issues
-# external_sources:
-#   - name: CSDN Blog
-#     rss_url: https://blog.csdn.net/rss/lafengxiaoyu
+external_sources:
+  - name: CSDN Blog
+    rss_url: https://blog.csdn.net/rss/lafengxiaoyu
 
 # -----------------------------------------------------------------------------
 # Collections
