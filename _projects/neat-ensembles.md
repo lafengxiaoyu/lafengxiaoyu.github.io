@@ -4,7 +4,7 @@ title: "NEAT-ensembles - Multiclass Classification with NEAT"
 description: Research project applying ECOC-NEAT for improved multiclass classification using neural evolution.
 img: assets/img/projects/neat-ensembles/ECOCNEAT.png
 importance: 3
-category: work
+category: school
 github: https://github.com/lafengxiaoyu/NEAT-ensembles
 ---
 
