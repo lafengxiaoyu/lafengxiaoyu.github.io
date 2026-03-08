@@ -37,10 +37,10 @@ Compare JWT is a security-focused tool designed for developers and security team
 
 <div class="row">
   <div class="col-sm mt-3 mt-md-0">
-    {% include figure.liquid path="assets/img/projects/compare-jwt/截屏2026-03-08 11.08.41.png" title="JWT Diff Comparison" class="img-fluid rounded z-depth-1" %}
+    {% include figure.html path="assets/img/projects/compare-jwt/截屏2026-03-08 11.08.41.png" title="JWT Diff Comparison" class="img-fluid rounded z-depth-1" %}
   </div>
   <div class="col-sm mt-3 mt-md-0">
-    {% include figure.liquid path="assets/img/projects/compare-jwt/截屏2026-03-08 11.09.04.png" title="Multi-Environment Comparison" class="img-fluid rounded z-depth-1" %}
+    {% include figure.html path="assets/img/projects/compare-jwt/截屏2026-03-08 11.09.04.png" title="Multi-Environment Comparison" class="img-fluid rounded z-depth-1" %}
   </div>
 </div>
 

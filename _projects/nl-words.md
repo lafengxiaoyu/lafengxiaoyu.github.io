@@ -35,18 +35,18 @@ NL Words is a comprehensive Dutch vocabulary learning platform designed to help 
 
 <div class="row">
   <div class="col-sm mt-3 mt-md-0">
-    {% include figure.liquid path="assets/img/projects/nl-words/截屏2026-03-08 11.02.36.png" title="Word Card Interface" class="img-fluid rounded z-depth-1" %}
+    {% include figure.html path="assets/img/projects/nl-words/截屏2026-03-08 11.02.36.png" title="Word Card Interface" class="img-fluid rounded z-depth-1" %}
   </div>
   <div class="col-sm mt-3 mt-md-0">
-    {% include figure.liquid path="assets/img/projects/nl-words/截屏2026-03-08 11.02.52.png" title="Word Details View" class="img-fluid rounded z-depth-1" %}
+    {% include figure.html path="assets/img/projects/nl-words/截屏2026-03-08 11.02.52.png" title="Word Details View" class="img-fluid rounded z-depth-1" %}
   </div>
 </div>
 <div class="row">
   <div class="col-sm mt-3 mt-md-0">
-    {% include figure.liquid path="assets/img/projects/nl-words/截屏2026-03-08 11.04.53.png" title="Learning Progress" class="img-fluid rounded z-depth-1" %}
+    {% include figure.html path="assets/img/projects/nl-words/截屏2026-03-08 11.04.53.png" title="Learning Progress" class="img-fluid rounded z-depth-1" %}
   </div>
   <div class="col-sm mt-3 mt-md-0">
-    {% include figure.liquid path="assets/img/projects/nl-words/截屏2026-03-08 11.07.04.png" title="Difficulty Filtering" class="img-fluid rounded z-depth-1" %}
+    {% include figure.html path="assets/img/projects/nl-words/截屏2026-03-08 11.07.04.png" title="Difficulty Filtering" class="img-fluid rounded z-depth-1" %}
   </div>
 </div>
 

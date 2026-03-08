@@ -41,10 +41,10 @@ The project was evaluated on three datasets:
 
 <div class="row">
   <div class="col-sm mt-3 mt-md-0">
-    {% include figure.liquid path="assets/img/projects/neat-ensembles/ECOCNEAT.png" title="ECOC-NEAT Architecture" class="img-fluid rounded z-depth-1" %}
+    {% include figure.html path="assets/img/projects/neat-ensembles/ECOCNEAT.png" title="ECOC-NEAT Architecture" class="img-fluid rounded z-depth-1" %}
   </div>
   <div class="col-sm mt-3 mt-md-0">
-    {% include figure.liquid path="assets/img/projects/neat-ensembles/Results.png" title="Experimental Results" class="img-fluid rounded z-depth-1" %}
+    {% include figure.html path="assets/img/projects/neat-ensembles/Results.png" title="Experimental Results" class="img-fluid rounded z-depth-1" %}
   </div>
 </div>
 
