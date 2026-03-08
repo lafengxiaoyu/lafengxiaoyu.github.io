@@ -1,19 +1,19 @@
 ---
 layout: post
-title: "在Spring Boot中使用自定义过滤器和MDC实现高级日志记录"
+title: "Advanced Logging in Spring Boot Using Custom Filters and MDC"
 date: 2026-03-08 10:00:00 +0800
-categories: Spring Boot 日志记录
+categories: Spring Boot Logging
 ---
 
-在现代Web开发中，日志记录是必不可少的。通过记录日志，开发者可以追踪请求的流程、定位问题并进行性能调优。本文将介绍如何在Spring Boot项目中使用自定义过滤器结合MDC（Mapped Diagnostic Context）技术，实现高级日志记录功能。
+In modern web development, logging is essential. By logging, developers can trace request flows, locate issues, and perform performance tuning. This article introduces how to implement advanced logging functionality in Spring Boot projects using custom filters combined with MDC (Mapped Diagnostic Context) technology.
 
-## 什么是MDC？
+## What is MDC?
 
-MDC（Mapped Diagnostic Context）是SLF4J和Logback提供的功能，用于在同一线程中存储和获取诊断上下文信息。这些上下文信息可以是用户ID、请求ID等动态数据，能够帮助我们在日志中添加有用的调试信息。
+MDC (Mapped Diagnostic Context) is a feature provided by SLF4J and Logback for storing and retrieving diagnostic context information within the same thread. This context information can be dynamic data such as user IDs and request IDs, helping us add useful debugging information to logs.
 
-## 代码示例
+## Code Example
 
-下面的代码展示了如何配置和使用自定义过滤器来实现日志记录。
+The following code shows how to configure and use custom filters to implement logging.
 
 ```java
 package com.xiaoyu.bootcustomfilters;
@@ -61,9 +61,9 @@ public class FilterConfig {
 }
 ```
 
-### 配置Logback
+### Configuring Logback
 
-要使上述MDC数据在日志中显示，我们需要配置Logback。在项目的资源目录中创建或修改`logback.xml`文件，添加如下配置：
+To make the MDC data appear in logs, we need to configure Logback. Create or modify the `logback.xml` file in the project's resource directory and add the following configuration:
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -80,32 +80,32 @@ public class FilterConfig {
 </configuration>
 ```
 
-## 代码解析
+## Code Analysis
 
-1. **FilterConfig类**：这是一个配置类，使用`@Configuration`注解标记，表示这是一个Spring配置类。
+1. **FilterConfig class**: This is a configuration class marked with the `@Configuration` annotation, indicating it's a Spring configuration class.
 
-2. **loggingFilter方法**：该方法返回一个`FilterRegistrationBean`，用来注册自定义过滤器。这里注册的是`TraceIdLoggingFilter`，并指定了过滤路径为`/users/*`
+2. **loggingFilter method**: This method returns a `FilterRegistrationBean` used to register a custom filter. Here we register `TraceIdLoggingFilter` and specify the filter path as `/users/*`
 
-3. **TraceIdLoggingFilter内部类**：这是实际的过滤器类，继承自`GenericFilter`。在`doFilter`方法中，我们使用MDC将一个唯一的`traceId`（追踪ID）添加到日志上下文中。在请求处理完毕后，MDC会自动清理这个`traceId`
+3. **TraceIdLoggingFilter inner class**: This is the actual filter class extending `GenericFilter`. In the `doFilter` method, we use MDC to add a unique `traceId` (trace ID) to the logging context. After the request processing is complete, MDC automatically cleans up this `traceId`
 
-4. **generateTraceId方法**：生成一个唯一的UUID作为`traceId`
+4. **generateTraceId method**: Generates a unique UUID as the `traceId`
 
-5. **logback.xml文件**：配置了一个控制台日志输出，并且日志格式中包含了`traceId`，从而每条日志都会打印出对应的追踪ID。
+5. **logback.xml file**: Configures console log output with the log format including `traceId`, so each log entry will print the corresponding trace ID.
 
-## 使用说明
+## Usage
 
-当Spring Boot应用启动并且有请求到达`/users/*`路径时，`TraceIdLoggingFilter`会自动为每个请求生成一个唯一的`traceId`，并将其放入MDC。这样，所有在该请求处理过程中生成的日志都会包含这个`traceId`，便于追踪和调试。
+When the Spring Boot application starts and a request arrives at the `/users/*` path, `TraceIdLoggingFilter` will automatically generate a unique `traceId` for each request and place it in MDC. This way, all logs generated during the request processing will include this `traceId`, making it easier to trace and debug.
 
-### 结果展示
+### Results
 
-在本地curl这个endpoint的时候可以收到回复
+You can curl this endpoint locally and receive a response:
 
 ```powershell
 curl http://localhost:8080/users
 [{"id":"4d194d1f-187c-40a0-b0df-466d1561248f","name":"User1","email":"user1@test.com"},{"id":"0ad8c605-84fa-472f-a7c4-d5c58c10495e","name":"User2","email":"user2@test.com"},{"id":"bdb6e551-4e6c-44bb-b665-44f4d943975f","name":"User3","email":"user3@test.com"}]
 ```
 
-因为这个call里调用了`users/`，所以会在log里输出如下
+Since this call invokes `users/`, the log output will be as follows:
 
 ```powershell
 
@@ -120,12 +120,12 @@ curl http://localhost:8080/users
 val
 ```
 
-如果多次call这个endpoint会多次打印`val`
+If you call this endpoint multiple times, `val` will be printed multiple times.
 
-另外我已经把整个package上传到了github，欢迎查看源码 [github源码](https://github.com/lafengxiaoyu/MDC_blog/tree/main)
+I have also uploaded the entire package to GitHub, welcome to check the source code [GitHub source code](https://github.com/lafengxiaoyu/MDC_blog/tree/main)
 
-## 参考文献
+## References
 
 - [Improved Java Logging with Mapped Diagnostic Context (MDC)](https://www.baeldung.com/mdc-in-log4j-2-logback)
-- [logback-spring.xml配置文件标签（超详解）](https://juejin.cn/post/7200549600590282789)
+- [logback-spring.xml configuration file tags (detailed)](https://juejin.cn/post/7200549600590282789)
 - [How to Define a Spring Boot Filter?](https://www.baeldung.com/spring-boot-add-filter?__cf_chl_tk=zV7PJjjl3sWV2hfVYFaIwDMLSOjtkO930PqvOCKQ-1722198116-0.0.1.1-7465)

@@ -1,28 +1,28 @@
 ---
 layout: post
-title: "矩阵权（Matrix weighted）Bezier三角（曲面）片"
+title: "Matrix Weighted Bezier Triangle Patches"
 date: 2026-03-08 12:00:00 +0800
-categories: CAGD Bezier 曲面
+categories: CAGD Bezier Surfaces
 ---
 
-参考文献仍然是杨老师的这篇
+The reference is still Yang's paper
 > Matrix weighted rational curves and surfaces
 
-文章，结合上篇博文中的算法，再次将其引申到三角面片上
+Combined with the algorithm from the previous blog post, we extend it again to triangular patches.
 
-## 算法描述
+## Algorithm Description
 
-假设 $P_{i,j,k}, 0\leq i,j,k\leq n, i+j+k=n$ 是给定的控制点，并且 $M_{ijk}$ 是对应的加权矩阵。矩阵权有理三角面片由下式定义
+Assume $P_{i,j,k}, 0\leq i,j,k\leq n, i+j+k=n$ are the given control points, and $M_{ijk}$ are the corresponding weight matrices. The matrix weighted rational triangular patch is defined by:
 
 \[
 Q_3(u,v,w)=[\sum_{i+j+k=n}M_{ijk}B^n_{i,j,k}(u,v,w)]^{-1}\sum_{i+j+k=n}M_{ijk}P_{i,j,k}B^n_{i,j,k}(u,v,w)
 \]
 
-其中 $(u,v)\in[u_{k_1}-1,u_{m+1}]\times[v_{k_2-1},v_{n+1}]$，$B^n_{i,j,k}(u,v,w)=\frac{n!}{i!j!k!}$ 是定义在三角域上的 Bernstein 基函数。
+where $(u,v)\in[u_{k_1}-1,u_{m+1}]\times[v_{k_2-1},v_{n+1}]$, and $B^n_{i,j,k}(u,v,w)=\frac{n!}{i!j!k!}$ is the Bernstein basis function defined on the triangular domain.
 
-## 代码实现
+## Code Implementation
 
-用 matlab 编写的如下程序为实现函数 `wm_tri.m`
+The following program written in MATLAB implements the function `wm_tri.m`
 
 ```matlab
 function trepBer = wm_tri( controls,num,M,N )
@@ -115,9 +115,9 @@ end
 end
 ```
 
-## 示例
+## Example
 
-下面绘制一个瞅瞅哈
+Let's plot one to see:
 
 ```matlab
 controls = cell(2,2);
@@ -145,19 +145,19 @@ end
 trepBer = wm_tri( controls,30,M,N);
 ```
 
-## 结果展示
+## Results
 
 <figure>
-  <img src="https://img-blog.csdn.net/20171025101054014?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvbGFmZW5neGlhb3l1/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="矩阵权Bezier三角曲面片示例" />
-  <figcaption>矩阵权Bezier三角曲面片示例</figcaption>
+  <img src="https://img-blog.csdn.net/20171025101054014?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvbGFmZW5neGlhb3l1/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="Matrix Weighted Bezier Triangle Patch Example" />
+  <figcaption>Matrix Weighted Bezier Triangle Patch Example</figcaption>
 </figure>
 
-## 再来一个例子
+## Another Example
 
-来一整个模型瞅瞅，比如说人脸的例子
+Let's look at a whole model, for example, a face model
 
-|原本的网格|Bezier曲面片|
+|Original Mesh|Bezier Surface Patch|
 |:-------------:|:-------------:|
-|<img src="https://img-blog.csdn.net/20171025103123542?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvbGFmZW5neGlhb3l1/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="原始网格" />| <img src="https://img-blog.csdn.net/20171025102752698?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvbGFmZW5neGlhb3l1/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="Bezier曲面片" />|
+|<img src="https://img-blog.csdn.net/20171025103123542?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvbGFmZW5neGlhb3l1/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="Original Mesh" />| <img src="https://img-blog.csdn.net/20171025102752698?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvbGFmZW5neGlhb3l1/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="Bezier Surface Patch" />|
 
-老铁没毛病
+Everything looks good!

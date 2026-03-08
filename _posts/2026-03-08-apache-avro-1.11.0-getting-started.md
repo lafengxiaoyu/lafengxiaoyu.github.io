@@ -1,20 +1,20 @@
 ---
 layout: post
-title: "Apache Avro 1.11.0 入门 (Java 版本)"
+title: "Getting Started with Apache Avro 1.11.0 (Java)"
 date: 2026-03-08 11:00:00 +0800
-categories: Avro 数据序列化
+categories: Avro Data Serialization
 ---
 
-本文参考原版英文文档：
+This article references the original English documentation:
 > [Apache Avro™ 1.11.0 Getting Started (Java)](https://avro.apache.org/docs/current/gettingstartedjava.html)
 
-这是使用 Java 开始使用 Apache Avro™ 的简短指南。 本指南仅涵盖使用 Avro 进行数据序列化；请参阅 Patrick Hunt 的 [Avro RPC快速入门](https://github.com/phunt/avro-rpc-quickstart)，了解如何使用 Avro 进行 RPC
+This is a short guide to getting started with Apache Avro™ using Java. This guide only covers using Avro for data serialization; for information on using Avro for RPC, see Patrick Hunt's [Avro RPC Quick Start](https://github.com/phunt/avro-rpc-quickstart)
 
-## 1. 下载
+## 1. Download
 
-可以从 [Apache Avro™ 发布页面](https://avro.apache.org/releases.html)下载 C、C++、C#、Java、PHP、Python 和 Ruby 的 Avro 实现。 本指南使用撰写本文时的最新版本 `Avro 1.11.0`。 对于本指南中的示例，请下载 `avro-1.11.0.jar` 和 `avro-tools-1.11.0.jar`
+Avro implementations for C, C++, C#, Java, PHP, Python, and Ruby can be downloaded from the [Apache Avro™ releases page](https://avro.apache.org/releases.html). This guide uses the latest version available at the time of writing, `Avro 1.11.0`. For the examples in this guide, download `avro-1.11.0.jar` and `avro-tools-1.11.0.jar`
 
-或者，如果您使用的是 Maven，请将以下依赖项添加到您的 POM：
+Alternatively, if you're using Maven, add the following dependency to your POM:
 
 ```xml
 <dependency>
@@ -24,7 +24,7 @@ categories: Avro 数据序列化
 </dependency>
 ```
 
-以及 Avro Maven 插件（用于执行代码生成）：
+And the Avro Maven plugin (for executing code generation):
 
 ```xml
 <plugin>
@@ -54,11 +54,11 @@ categories: Avro 数据序列化
 </plugin>
 ```
 
-您还可以从源代码构建所需的 Avro jar包。不过构建 Avro 超出了本指南的范围；有关更多信息，请参阅 wiki 中的[构建文档页面](https://cwiki.apache.org/AVRO/Build+Documentation)
+You can also build the required Avro jar files from source. However, building Avro is beyond the scope of this guide; for more information, see the [Build Documentation page](https://cwiki.apache.org/AVRO/Build+Documentation) in the wiki.
 
-## 2. 定义模板（schema）
+## 2. Defining a Schema
 
-Avro 模板是使用 JSON 定义的。模板由[基本类型](https://avro.apache.org/docs/current/spec.html#schema_primitive)（null、boolean、int、long、float、double、bytes 和 string）和[复杂类型](https://avro.apache.org/docs/current/spec.html#schema_complex)（record、enum、array、map、union 和 fixed）组成。您可以从规范文档中了解有关 Avro模板和类型的更多信息，但现在让我们从一个简单的schema示例 `user.avsc` 开始：
+Avro schemas are defined using JSON. Schemas are composed of [primitive types](https://avro.apache.org/docs/current/spec.html#schema_primitive) (null, boolean, int, long, float, double, bytes, and string) and [complex types](https://avro.apache.org/docs/current/spec.html#schema_complex) (record, enum, array, map, union, and fixed). You can learn more about Avro schemas and types from the specification documentation, but for now let's start with a simple schema example `user.avsc`:
 
 ```json
 {"namespace": "example.avro",
@@ -72,33 +72,33 @@ Avro 模板是使用 JSON 定义的。模板由[基本类型](https://avro.apach
 }
 ```
 
-此模式定义了代表假设用户的记录。 （请注意，模式文件只能包含单个模式定义）记录定义至少必须包括其类型（`"type":"record"`）、一个名称（`"name":"User"`）和字段（在本例中为 `name`、`favorite_number` 和 `favorite_color`）。我们还定义了一个命名空间（`"namespace":"example.avro"`），它与 `name` 属性一起定义了模式的 "full name" 也就是"全名"（在本例中为 `example.avro.User`）。
+This schema defines a record representing a hypothetical user. (Note that a schema file can only contain a single schema definition.) A record definition must include at minimum its type (`"type":"record"`), a name (`"name":"User"`), and fields (in this case `name`, `favorite_number`, and `favorite_color`). We also defined a namespace (`"namespace":"example.avro"`), which together with the `name` attribute defines the schema's "full name" (in this case `example.avro.User`).
 
-字段是通过对象数组定义的，每个对象定义一个名称和类型（其他属性是可选的，请参阅[记录规范文档](https://avro.apache.org/docs/current/spec.html#schema_record)以获取更多详细信息）。字段的类型属性是另一个模式对象，它可以是原始类型或复杂类型。例如，我们的 `User` schema 的 `name` 字段是原始类型字符串，而 `favorite_number` 和 `favorite_color` 字段都是联合字符串(`unions`)，由 JSON 数组表示。 `unions` 是一种复杂类型，可以是数组中列出的任何类型；例如， `favorite_number` 可以是 `int` 或 `null`，本质上它是一个可选字段。
+Fields are defined through an array of objects, with each object defining a name and type (other attributes are optional, see the [record specification documentation](https://avro.apache.org/docs/current/spec.html#schema_record) for more details). The field's type attribute is another schema object, which can be a primitive type or a complex type. For example, our `User` schema's `name` field is the primitive type string, while the `favorite_number` and `favorite_color` fields are both unions, represented by JSON arrays. `unions` is a complex type that can be any of the types listed in the array; for example, `favorite_number` can be `int` or `null`, essentially making it an optional field.
 
-## 3. 使用代码生成进行序列化和反序列化
+## 3. Serialization and Deserialization with Code Generation
 
-### 3.1 编译Schema(模板)
+### 3.1 Compiling the Schema
 
-代码生成允许我们根据之前定义的模式自动创建类。一旦我们定义了相关的类，就不需要在我们的程序中直接使用模式。我们使用 avro-tools jar包生成代码如下：
+Code generation allows us to automatically create classes based on the schema we defined earlier. Once we have defined the relevant classes, we don't need to use schemas directly in our programs. We use the avro-tools jar package to generate code as follows:
 
 ```bash
 java -jar /path/to/avro-tools-1.11.0.jar compile schema <schema file> <destination>
 ```
 
-这将根据提供的目标文件夹中架构的命名空间在包中生成适当的源文件。例如，要从上面定义的模式中生成包 `example.avro` 中的用户类，运行
+This generates appropriate source files in a package based on the schema's namespace in the provided target directory. For example, to generate a User class in the package `example.avro` from the schema defined above, run:
 
 ```bash
 java -jar /path/to/avro-tools-1.11.0.jar compile schema user.avsc .
 ```
 
-请注意，如果您使用 Avro Maven 插件，则无需手动调用模式编译器；该插件会自动对配置的源目录中存在的任何 `.avsc` 文件执行代码生成
+Note that if you're using the Avro Maven plugin, you don't need to manually invoke the schema compiler; the plugin automatically performs code generation on any `.avsc` files present in the configured source directory.
 
-### 3.2 创建Users(用户)
+### 3.2 Creating Users
 
-现在我们已经完成了代码生成，让我们创建一些用户，将它们序列化为磁盘上的数据文件，然后读回文件并反序列化用户对象。
+Now that we've completed code generation, let's create some users, serialize them to a data file on disk, and then read back the file and deserialize the user objects.
 
-首先让我们创建一些用户并设置他们的字段。
+First, let's create some users and set their fields.
 
 ```java
 User user1 = new User();
@@ -117,13 +117,13 @@ User user3 = User.newBuilder()
              .build();
 ```
 
-如本例所示，可以通过直接调用构造函数或使用构建器来创建 Avro 对象。与构造函数不同，生成器将自动设置模式中指定的任何默认值。此外，构建器会按设置验证数据，而直接构造的对象在对象被序列化之前不会导致错误。但是，直接使用构造函数通常会提供更好的性能，因为构造函数会在写入数据结构之前创建数据结构的副本。
+As shown in this example, Avro objects can be created by directly calling constructors or using builders. Unlike constructors, builders automatically set any default values specified in the schema. Additionally, builders validate data as it's set, while directly constructed objects won't cause errors until the object is serialized. However, using constructors directly typically provides better performance, as constructors create copies of data structures before writing to them.
 
-请注意，我们没有设置 `user1` 最喜欢的颜色。由于该记录的类型为 `["string", "null"]`，我们可以将其设置为字符串或将其保留为 `null`；它本质上是可选的。同样，我们将 `user3` 的最喜欢的数字设置为 `null`（使用构建器需要设置所有字段，即它们为 `null`）
+Note that we didn't set user1's favorite color. Since the type of this record is `["string", "null"]`, we can set it to a string or leave it as `null`; it's essentially optional. Similarly, we set user3's favorite number to `null` (using builders requires setting all fields, even if they're `null`).
 
-### 3.3 Serializing(序列化)
+### 3.3 Serializing
 
-现在让我们将用户`Users`序列化到磁盘
+Now let's serialize the users to disk.
 
 ```java
 // Serialize user1, user2 and user3 to disk
@@ -136,13 +136,13 @@ dataFileWriter.append(user3);
 dataFileWriter.close();
 ```
 
-我们创建了一个 `DatumWriter`，它将 Java 对象转换为内存中的序列化格式。 `SpecificDatumWriter` 类与生成的类一起使用，并从指定的生成类型中提取模式。
+We created a `DatumWriter` that converts Java objects to in-memory serialized format. The `SpecificDatumWriter` class works with generated classes and extracts the schema from the specified generated type.
 
-接下来我们创建一个 `DataFileWriter`，它将序列化的记录以及模式写入 `dataFileWriter.create` 调用中指定的文件。我们通过调用 `dataFileWriter.append` 方法将用户写入文件。完成写入后，我们关闭数据文件
+Next we create a `DataFileWriter` that writes serialized records along with the schema to the file specified in the `dataFileWriter.create` call. We write users to the file by calling the `dataFileWriter.append` method. After writing is complete, we close the data file.
 
-### 3.4 Deserializing(反序列化)
+### 3.4 Deserializing
 
-最后，让我们反序列化我们刚刚创建的数据文件
+Finally, let's deserialize the data file we just created.
 
 ```java
 // Deserialize Users from disk
@@ -158,7 +158,7 @@ while (dataFileReader.hasNext()) {
 }
 ```
 
-此代码段将输出：
+This code snippet will output:
 
 ```java
 {"name": "Alyssa", "favorite_number": 256, "favorite_color": null}
@@ -166,47 +166,47 @@ while (dataFileReader.hasNext()) {
 {"name": "Charlie", "favorite_number": null, "favorite_color": "blue"}
 ```
 
-反序列化与序列化非常相似。我们创建了一个`SpecificDatumReader`，类似于我们在序列化中使用的`SpecificDatumWriter`，它将内存中的序列化项转换为我们生成的类的实例，在本例中为`User`。我们将 `DatumReader `和之前创建的 `File` 传递给 `DataFileReader`，类似于 `DataFileWriter`，它读取 `writer` 使用的模式以及磁盘上文件中的数据。将使用文件中包含的写入者模式和读取器提供的模式（在本例中为 `User` 类）读取数据。编写者的模式需要知道写入字段的顺序，而读者的模式需要知道需要哪些字段以及如何填写自文件写入以来添加的字段的默认值。如果两个架构之间存在差异，则根据架构解析规范对其进行解析。
+Deserialization is very similar to serialization. We created a `SpecificDatumReader`, similar to the `SpecificDatumWriter` we used in serialization, which converts in-memory serialized items to instances of our generated class, in this case `User`. We pass the `DatumReader` and the previously created `File` to `DataFileReader`. Similar to `DataFileWriter`, it reads the schema used by the `writer` and the data from the file on disk. Data is read using the writer's schema contained in the file and the reader's schema provided (in this case the `User` class). The writer's schema needs to know the order of fields written, while the reader's schema needs to know which fields are required and how to fill in default values for fields added since the file was written. If there are differences between the two schemas, they are resolved according to the schema resolution specification.
 
-接下来我们使用 `DataFileReader` 遍历序列化的用户并将反序列化的对象打印到标准输出。注意我们如何执行迭代：我们创建了一个单独的用户对象，我们将当前反序列化的用户存储在其中，并将这个记录对象传递给 `dataFileReader.next` 的每个调用。这是一种性能优化，允许 `DataFileReader` 重用相同的用户对象，而不是为每次迭代分配一个新用户，如果我们反序列化一个大数据文件，这在对象分配和垃圾收集方面可能非常昂贵。虽然这种技术是遍历数据文件的标准方法，但如果性能不是问题，也可以使用 `for (User user : dataFileReader)`
+Next we use `DataFileReader` to iterate through the serialized users and print the deserialized objects to standard output. Note how we perform the iteration: we create a single user object where we store the currently deserialized user, and pass this record object to each call to `dataFileReader.next`. This is a performance optimization that allows `DataFileReader` to reuse the same user object instead of allocating a new user for each iteration, which can be very expensive in terms of object allocation and garbage collection if we're deserializing a large data file. While this technique is the standard way to iterate through data files, if performance isn't an issue, you can also use `for (User user : dataFileReader)`
 
-### 3.5 编译并运行示例代码
+### 3.5 Compiling and Running the Example Code
 
-此示例代码作为 Maven 项目包含在 Avro 文档的`examples/java-example` 目录中。在此目录中，执行以下命令来构建和运行示例：
+This example code is included as a Maven project in the Avro documentation's `examples/java-example` directory. In this directory, run the following commands to build and run the example:
 
 ```bash
 $ mvn compile # includes code generation via Avro Maven plugin
 $ mvn -q exec:java -Dexec.mainClass=example.SpecificMain
 ```
 
-### 3.6 Beta 功能：生成更快的代码
+### 3.6 Beta Feature: Generating Faster Code
 
-在此版本中，我们引入了一种新的代码生成方法，可将对象的解码速度提高 10% 以上，并将编码速度提高 30% 以上（未来的性能增强正在进行中）。为了确保将此更改顺利引入生产系统，此功能由功能标志控制，系统属性 `org.apache.avro.specific.use_custom_coders`。在第一个版本中，此功能默认关闭。要打开它，请在运行时将系统标志设置为 `true`。例如，在上面的示例中，您可以启用更"胖"的编码器，如下所示：
+In this release, we've introduced a new code generation method that can improve object decoding speed by over 10% and encoding speed by over 30% (future performance enhancements are in progress). To ensure this change is smoothly introduced into production systems, this feature is controlled by a feature flag, the system property `org.apache.avro.specific.use_custom_coders`. In the first release, this feature is off by default. To turn it on, set the system flag to `true` at runtime. For example, in the example above, you can enable the "fatter" encoder as follows:
 
 ```bash
 $ mvn -q exec:java -Dexec.mainClass=example.SpecificMain \
     -Dorg.apache.avro.specific.use_custom_coders=true
 ```
 
-请注意，您不必重新编译 Avro 模式即可访问此功能。该功能被编译并内置到您的代码中，您可以在运行时使用功能标志打开和关闭它。因此，例如，您可以在测试期间将其打开，然后在生产中关闭。或者，您可以在生产中将其打开，如果出现问题，请迅速将其关闭。
+Note that you don't need to recompile Avro schemas to access this feature. The feature is compiled and built into your code, and you can turn it on and off at runtime using the feature flag. Therefore, for example, you can turn it on during testing and then turn it off in production. Or you can turn it on in production and quickly turn it off if issues arise.
 
-我们鼓励 Avro 社区尽早使用这一新功能，以帮助建立信心。 （对于那些为云计算资源一次性付费的人来说，它可以带来有意义的成本节约。）随着信心的建立，我们将默认启用此功能，并最终消除功能标志（和旧代码）
+We encourage the Avro community to use this new feature early to help build confidence. (For those paying for cloud computing resources once, it can lead to meaningful cost savings.) As confidence builds, we will enable this feature by default and eventually eliminate the feature flag (and old code).
 
-## 4. 无需代码生成的序列化和反序列化
+## 4. Serialization and Deserialization Without Code Generation
 
-Avro 中的数据始终与其对应的模式一起存储，这意味着无论我们是否提前知道模式，我们都可以随时读取序列化项目。这允许我们在不生成代码的情况下执行序列化和反序列化。
+Data in Avro is always stored along with its corresponding schema, which means we can read serialized items at any time, whether or not we know the schema in advance. This allows us to perform serialization and deserialization without generating code.
 
-让我们回顾与上一节相同的示例，但不使用代码生成：我们将创建一些用户，将它们序列化为磁盘上的数据文件，然后读回文件并反序列化用户对象
+Let's review the same example as the previous section, but without using code generation: we'll create some users, serialize them to a data file on disk, and then read back the file and deserialize the user objects.
 
-### 4.1 创建Users(用户)
+### 4.1 Creating Users
 
-首先，我们使用 Parser 来读取我们的模式定义并创建一个 Schema 对象。
+First, we use a Parser to read our schema definition and create a Schema object.
 
 ```java
 Schema schema = new Schema.Parser().parse(new File("user.avsc"));
 ```
 
-使用这个Schema(模式)，让我们创建一些用户
+Using this schema, let's create some users.
 
 ```java
 GenericRecord user1 = new GenericData.Record(schema);
@@ -220,15 +220,15 @@ user2.put("favorite_number", 7);
 user2.put("favorite_color", "red");
 ```
 
-由于我们不使用代码生成，我们使用 `GenericRecords` 来表示用户。 `GenericRecord` 使用模式来验证我们是否只指定了有效字段。如果我们尝试设置一个不存在的字段（例如，`user1.put("favorite_animal", "cat")`），我们将在运行程序时收到 `AvroRuntimeException`。
+Since we're not using code generation, we use `GenericRecords` to represent users. `GenericRecord` uses the schema to validate that we only specify valid fields. If we try to set a non-existent field (for example, `user1.put("favorite_animal", "cat")`), we'll receive an `AvroRuntimeException` when running the program.
 
-请注意，我们没有设置 user1 最喜欢的颜色。由于该记录的类型为 `["string", "null"]`，我们可以将其设置为字符串或将其保留为 `null`；它本质上是可选的
+Note that we didn't set user1's favorite color. Since the type of this record is `["string", "null"]`, we can set it to a string or leave it as `null`; it's essentially optional.
 
-### 4.2 Serializing(序列化)
+### 4.2 Serializing
 
-现在我们已经创建了用户对象，对它们进行序列化和反序列化几乎与上面使用代码生成的示例相同。主要区别在于我们使用通用而不是特定的读取器和写入器。
+Now that we've created the user objects, serializing and deserializing them is almost the same as the example using code generation above. The main difference is that we use generic rather than specific readers and writers.
 
-首先，我们将我们的用户序列化到磁盘上的数据文件
+First, let's serialize our users to a data file on disk.
 
 ```java
 // Serialize user1 and user2 to disk
@@ -241,13 +241,13 @@ dataFileWriter.append(user2);
 dataFileWriter.close();
 ```
 
-我们创建了一个 `DatumWriter`，它将 Java 对象转换为内存中的序列化格式。由于我们不使用代码生成，我们创建了一个 `GenericDatumWriter`。它需要模式来确定如何编写 `GenericRecords` 并验证是否存在所有不可为空的字段。
+We created a `DatumWriter` that converts Java objects to in-memory serialized format. Since we're not using code generation, we created a `GenericDatumWriter`. It needs the schema to determine how to write `GenericRecords` and to verify that all non-nullable fields are present.
 
-与代码生成示例一样，我们还创建了一个 `DataFileWriter`，它将序列化的记录以及模式写入 `dataFileWriter.create` 调用中指定的文件。我们通过调用 `dataFileWriter.append` 方法将用户写入文件。完成写入后，我们关闭数据文件。
+As with the code generation example, we also created a `DataFileWriter` that writes serialized records along with the schema to the file specified in the `dataFileWriter.create` call. We write users to the file by calling the `dataFileWriter.append` method. After writing is complete, we close the data file.
 
-### 4.3 Deserializing(反序列化)
+### 4.3 Deserializing
 
-最后，我们将反序列化刚刚创建的数据文件
+Finally, let's deserialize the data file we just created.
 
 ```java
 // Deserialize users from disk
@@ -263,20 +263,20 @@ while (dataFileReader.hasNext()) {
 }
 ```
 
-这将会输出：
+This will output:
 
 ```java
 {"name": "Alyssa", "favorite_number": 256, "favorite_color": null}
 {"name": "Ben", "favorite_number": 7, "favorite_color": "red"}
 ```
 
-反序列化与序列化非常相似。我们创建一个 `GenericDatumReader`，类似于我们在序列化中使用的 `GenericDatumWriter`，它将内存中的序列化项转换为 `GenericRecords`。我们将 `DatumReader`和之前创建的 `File` 传递给 `DataFileReader`，类似于 `DataFileWriter`，它读取 `writer` 使用的模式以及磁盘上文件中的数据。将使用文件中包含的写入者模式读取数据，并将读取器模式提供给 `GenericDatumReader`。编写者的模式需要知道写入字段的顺序，而读者的模式需要知道需要哪些字段以及如何填写自文件写入以来添加的字段的默认值。如果两个架构之间存在差异，则根据架构解析规范对其进行解析。
+Deserialization is very similar to serialization. We create a `GenericDatumReader`, similar to the `GenericDatumWriter` we used in serialization, which converts in-memory serialized items to `GenericRecords`. We pass the `DatumReader` and the previously created `File` to `DataFileReader`. Similar to `DataFileWriter`, it reads the schema used by the `writer` and the data from the file on disk. Data is read using the writer's schema contained in the file, and the reader's schema is provided to `GenericDatumReader`. The writer's schema needs to know the order of fields written, while the reader's schema needs to know which fields are required and how to fill in default values for fields added since the file was written. If there are differences between the two schemas, they are resolved according to the schema resolution specification.
 
-接下来，我们使用 `DataFileReader` 遍历序列化的用户并将反序列化的对象打印到标准输出。请注意我们如何执行迭代：我们创建一个 `GenericRecord` 对象，我们将当前反序列化的用户存储在其中，并将此记录对象传递给 `dataFileReader.next` 的每个调用。这是一种性能优化，允许 `DataFileReader` 重用相同的记录对象，而不是为每次迭代分配一个新的 `GenericRecord`，如果我们反序列化大型数据文件，这在对象分配和垃圾收集方面可能非常昂贵。虽然这种技术是遍历数据文件的标准方法，但如果性能不是问题，也可以使用 `for (GenericRecord user : dataFileReader)`
+Next, we use `DataFileReader` to iterate through the serialized users and print the deserialized objects to standard output. Note how we perform the iteration: we create a `GenericRecord` object where we store the currently deserialized user, and pass this record object to each call to `dataFileReader.next`. This is a performance optimization that allows `DataFileReader` to reuse the same record object instead of allocating a new `GenericRecord` for each iteration, which can be very expensive in terms of object allocation and garbage collection if we're deserializing a large data file. While this technique is the standard way to iterate through data files, if performance isn't an issue, you can also use `for (GenericRecord user : dataFileReader)`
 
-### 4.4 编译并运行示例代码
+### 4.4 Compiling and Running the Example Code
 
-此示例代码作为 Maven 项目包含在 Avro 文档的`examples/java-example` 目录中。在此目录中，执行以下命令来构建和运行示例：
+This example code is included as a Maven project in the Avro documentation's `examples/java-example` directory. In this directory, run the following commands to build and run the example:
 
 ```bash
 $ mvn compile
