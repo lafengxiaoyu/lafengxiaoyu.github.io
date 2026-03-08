@@ -9,16 +9,20 @@ nav_order: 4
 
 ## GitHub Profile
 
-[![GitHub Stats](https://github-readme-stats.vercel.app/api?username=lafengxiaoyu&theme=default&show_icons=true)](https://github.com/lafengxiaoyu)
+Visit my GitHub profile: [github.com/lafengxiaoyu](https://github.com/lafengxiaoyu)
 
 ---
 
 ## Featured Repositories
 
 {% if site.data.repositories.github_repos %}
-<div class="repositories d-flex flex-wrap flex-md-row flex-column justify-content-between align-items-center">
+<div class="repositories">
   {% for repo in site.data.repositories.github_repos %}
-    {% include repository/repo.html repository=repo %}
+    <div class="repo p-2">
+      <a href="https://github.com/{{ repo }}" class="btn btn-outline-primary btn-block text-left">
+        <i class="fab fa-github"></i> {{ repo }}
+      </a>
+    </div>
   {% endfor %}
 </div>
 {% endif %}
