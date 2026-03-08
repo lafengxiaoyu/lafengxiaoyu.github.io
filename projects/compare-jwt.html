@@ -1,0 +1,353 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html><body>
+<p>A powerful web application for comparing JWT files or tracking JWT changes across Git commits, with support for multiple report formats.</p>
+
+<p><strong>Repository:</strong> https://github.com/lafengxiaoyu/compare-jwt</p>
+
+<h2 id="description">Description</h2>
+
+<p>Compare JWT is a security-focused tool designed for developers and security teams to analyze and compare JWT tokens across different environments or Git commits. It’s particularly useful for banking and financial institutions with strict encryption environments where data cannot be uploaded to external servers.</p>
+
+<h2 id="key-features">Key Features</h2>
+
+<ul>
+  <li>🔐 <strong>JWT File Comparison</strong> - Input two JWT tokens, automatically decode and visualize differences</li>
+  <li>🌍 <strong>Multi-Environment Comparison</strong> - Track JWT changes across multiple environments (prd/acc/tst) with global detection</li>
+  <li>📄 <strong>Report Generation</strong> - Export reports in Markdown, HTML, and JSON formats</li>
+  <li>🎨 <strong>GitHub-Style Diff Interface</strong> - Clear visualization of additions, deletions, and modifications</li>
+  <li>📋 <strong>Claims Table View</strong> - Tabular display of JWT claims with synchronized scrolling</li>
+  <li>🚀 <strong>Real-time Preview</strong> - Instant comparison results</li>
+  <li>📚 <strong>Built-in User Manual</strong> - Comprehensive usage guide</li>
+  <li>🔒 <strong>Local-Only Processing</strong> - Perfect for secure environments with no external data transmission</li>
+</ul>
+
+<h2 id="technology-stack">Technology Stack</h2>
+
+<ul>
+  <li>
+<strong>Frontend:</strong> React, TypeScript, Vite</li>
+  <li>
+<strong>Backend:</strong> Node.js, Express</li>
+  <li>
+<strong>Git Operations:</strong> simple-git</li>
+  <li>
+<strong>JWT Parsing:</strong> jwt-decode</li>
+  <li>
+<strong>Diff Comparison:</strong> diff</li>
+  <li>
+<strong>Testing:</strong> Vitest</li>
+</ul>
+
+<h2 id="screenshots">Screenshots</h2>
+
+<div class="row">
+  <div class="col-sm mt-3 mt-md-0">
+    <figure>
+
+  <picture>
+    
+    <source class="responsive-img-srcset" media="(max-width: 480px)" srcset="/assets/img/projects/compare-jwt/%E6%88%AA%E5%B1%8F2026-03-08%2011.08.41-480.webp"></source>
+    <source class="responsive-img-srcset" media="(max-width: 800px)" srcset="/assets/img/projects/compare-jwt/%E6%88%AA%E5%B1%8F2026-03-08%2011.08.41-800.webp"></source>
+    <source class="responsive-img-srcset" media="(max-width: 1400px)" srcset="/assets/img/projects/compare-jwt/%E6%88%AA%E5%B1%8F2026-03-08%2011.08.41-1400.webp"></source>
+    
+
+    <!-- Fallback to the original file -->
+    <img src="/assets/img/projects/compare-jwt/%E6%88%AA%E5%B1%8F2026-03-08%2011.08.41.png" class="img-fluid rounded z-depth-1" width="auto" height="auto" title="JWT Diff Comparison" onerror="this.onerror=null; $('.responsive-img-srcset').remove();">
+
+  </picture>
+
+</figure>
+
+  </div>
+  <div class="col-sm mt-3 mt-md-0">
+    <figure>
+
+  <picture>
+    
+    <source class="responsive-img-srcset" media="(max-width: 480px)" srcset="/assets/img/projects/compare-jwt/%E6%88%AA%E5%B1%8F2026-03-08%2011.09.04-480.webp"></source>
+    <source class="responsive-img-srcset" media="(max-width: 800px)" srcset="/assets/img/projects/compare-jwt/%E6%88%AA%E5%B1%8F2026-03-08%2011.09.04-800.webp"></source>
+    <source class="responsive-img-srcset" media="(max-width: 1400px)" srcset="/assets/img/projects/compare-jwt/%E6%88%AA%E5%B1%8F2026-03-08%2011.09.04-1400.webp"></source>
+    
+
+    <!-- Fallback to the original file -->
+    <img src="/assets/img/projects/compare-jwt/%E6%88%AA%E5%B1%8F2026-03-08%2011.09.04.png" class="img-fluid rounded z-depth-1" width="auto" height="auto" title="Multi-Environment Comparison" onerror="this.onerror=null; $('.responsive-img-srcset').remove();">
+
+  </picture>
+
+</figure>
+
+  </div>
+</div>
+
+<h2 id="usage">Usage</h2>
+
+<h3 id="1-jwt-file-comparison">1. JWT File Comparison</h3>
+
+<ol>
+  <li>Click “JWT文件对比” (JWT File Comparison) tab</li>
+  <li>Paste the first JWT token in the left input box</li>
+  <li>Paste the second JWT token in the right input box</li>
+  <li>Click “对比 JWT/JWE” (Compare JWT/JWE) button</li>
+  <li>View the decoded JSON difference comparison</li>
+</ol>
+
+<p><strong>View Options:</strong></p>
+<ul>
+  <li>
+<strong>Diff View</strong>: GitHub-style side-by-side comparison</li>
+  <li>
+<strong>Claims Table</strong>: Table view with row-level highlighting and synchronized scrolling</li>
+</ul>
+
+<h3 id="2-multi-environment-comparison">2. Multi-Environment Comparison</h3>
+
+<p>This feature is ideal for tracking JWT configuration changes across multiple environments (prd/acc/tst), and also supports global detection of all changed files.</p>
+
+<p><strong>Use Cases:</strong></p>
+<ul>
+  <li>Updated JWT configurations in prd, acc, tst environments</li>
+  <li>Need to view JWT changes before and after a specific commit</li>
+  <li>Need to compare new endpoints, modified manifestVersion, etc.</li>
+  <li>Files not in standard environment directories, need global detection</li>
+</ul>
+
+<p><strong>Steps:</strong></p>
+
+<ol>
+  <li>Click “多环境对比” (Multi-Environment Comparison) tab</li>
+  <li>Configure parameters:
+    <ul>
+      <li>
+<strong>API Address</strong>: Backend service address (default: http://localhost:3001)</li>
+      <li>
+<strong>Repository Path</strong>: Absolute path to your Git repository
+        <ul>
+          <li>Example: <code class="language-plaintext highlighter-rouge">/Users/yourname/projects/my-repo</code>
+</li>
+        </ul>
+      </li>
+      <li>
+<strong>Commit 1 (Start)</strong>: Commit before changes
+        <ul>
+          <li>Example: <code class="language-plaintext highlighter-rouge">HEAD~10</code> or specific commit hash <code class="language-plaintext highlighter-rouge">abc123</code>
+</li>
+        </ul>
+      </li>
+      <li>
+<strong>Commit 2 (End)</strong>: Commit after changes
+        <ul>
+          <li>Example: <code class="language-plaintext highlighter-rouge">HEAD</code> or specific commit hash <code class="language-plaintext highlighter-rouge">def456</code>
+</li>
+        </ul>
+      </li>
+      <li>
+<strong>Environment Directories (Optional)</strong>: Comma-separated environment paths
+        <ul>
+          <li>Example: <code class="language-plaintext highlighter-rouge">config/prd, config/acc, config/tst</code>
+</li>
+          <li>If left blank, auto-detects common environment directories</li>
+          <li>If no standard directories found, processes all changed files globally</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>Click “多环境对比” (Multi-Environment Comparison) button</li>
+  <li>View results:
+    <ul>
+      <li>
+<strong>Summary Cards</strong>: Number of modified JWT files per environment</li>
+      <li>
+<strong>Details</strong>: Change statistics for each JWT file
+        <ul>
+          <li>Green: Added lines</li>
+          <li>Red: Deleted lines</li>
+          <li>Gray: Unchanged lines</li>
+        </ul>
+      </li>
+      <li>
+<strong>Diff View</strong>: Specific change content</li>
+    </ul>
+  </li>
+  <li>
+<strong>Generate Reports</strong>:
+    <ul>
+      <li>Click download buttons after comparison</li>
+      <li>📄 Download Markdown Report</li>
+      <li>🌐 Download HTML Report</li>
+      <li>📦 Download JSON Report</li>
+    </ul>
+  </li>
+</ol>
+
+<h3 id="3-report-generation">3. Report Generation</h3>
+
+<p><strong>Supported Formats:</strong></p>
+
+<ol>
+  <li>
+<strong>Markdown Format</strong>
+    <ul>
+      <li>Easy to read and edit</li>
+      <li>Supports GitHub-style diff syntax</li>
+      <li>Suitable for documentation sharing and Git commits</li>
+      <li>Filename example: <code class="language-plaintext highlighter-rouge">jwt-compare-report-2026-03-06.markdown</code>
+</li>
+    </ul>
+  </li>
+  <li>
+<strong>HTML Format</strong>
+    <ul>
+      <li>Beautiful rendering effects</li>
+      <li>Syntax highlighting</li>
+      <li>Suitable for browser viewing</li>
+      <li>Can be directly shared with team</li>
+      <li>Filename example: <code class="language-plaintext highlighter-rouge">jwt-compare-report-2026-03-06.html</code>
+</li>
+    </ul>
+  </li>
+  <li>
+<strong>JSON Format</strong>
+    <ul>
+      <li>Machine-readable structured data</li>
+      <li>Suitable for program processing and automation integration</li>
+      <li>Contains complete change information</li>
+      <li>Filename example: <code class="language-plaintext highlighter-rouge">jwt-compare-report-2026-03-06.json</code>
+</li>
+    </ul>
+  </li>
+</ol>
+
+<p><strong>Generate Reports via Web:</strong></p>
+
+<ol>
+  <li>Complete comparison in “Multi-Environment Comparison” page</li>
+  <li>Click corresponding download buttons</li>
+</ol>
+
+<p><strong>Generate Reports via Command Line:</strong></p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># Generate Markdown report (all files)</span>
+./scripts/generate-report.sh /path/to/repo commit1 commit2
+
+<span class="c"># Generate HTML report (specific file)</span>
+./scripts/generate-report.sh /path/to/repo commit1 commit2 test-data/test.jose html
+
+<span class="c"># Generate JSON report</span>
+./scripts/generate-report.sh /path/to/repo commit1 commit2 <span class="s1">''</span> json
+</code></pre></div></div>
+
+<p><strong>Generate Reports via CURL:</strong></p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># Generate Markdown report</span>
+curl <span class="nt">-X</span> POST http://localhost:3001/api/git/generate-report <span class="se">\</span>
+  <span class="nt">-H</span> <span class="s2">"Content-Type: application/json"</span> <span class="se">\</span>
+  <span class="nt">-d</span> <span class="s1">'{
+    "repoPath": "/path/to/repo",
+    "commit1": "commit1-hash",
+    "commit2": "commit2-hash",
+    "format": "markdown"
+  }'</span>
+
+<span class="c"># Generate HTML report (specific file)</span>
+curl <span class="nt">-X</span> POST http://localhost:3001/api/git/generate-report <span class="se">\</span>
+  <span class="nt">-H</span> <span class="s2">"Content-Type: application/json"</span> <span class="se">\</span>
+  <span class="nt">-d</span> <span class="s1">'{
+    "repoPath": "/path/to/repo",
+    "commit1": "commit1-hash",
+    "commit2": "commit2-hash",
+    "file": "test-data/test.jose",
+    "format": "html"
+  }'</span>
+</code></pre></div></div>
+
+<h2 id="environment-directory-auto-detection">Environment Directory Auto-Detection</h2>
+
+<p>If “Environment Directories” is left blank, the system automatically detects directories containing the following keywords:</p>
+
+<ul>
+  <li>
+<strong>Production</strong>: <code class="language-plaintext highlighter-rouge">prd</code>, <code class="language-plaintext highlighter-rouge">prod</code>, <code class="language-plaintext highlighter-rouge">production</code>
+</li>
+  <li>
+<strong>Acceptance</strong>: <code class="language-plaintext highlighter-rouge">acc</code>, <code class="language-plaintext highlighter-rouge">acceptance</code>
+</li>
+  <li>
+<strong>Test</strong>: <code class="language-plaintext highlighter-rouge">tst</code>, <code class="language-plaintext highlighter-rouge">test</code>
+</li>
+  <li>
+<strong>Staging</strong>: <code class="language-plaintext highlighter-rouge">stg</code>, <code class="language-plaintext highlighter-rouge">staging</code>
+</li>
+  <li>
+<strong>Development</strong>: <code class="language-plaintext highlighter-rouge">dev</code>
+</li>
+</ul>
+
+<p>If no standard environment directories are detected, the system automatically processes all changed files (global detection).</p>
+
+<h2 id="installation">Installation</h2>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>npm <span class="nb">install</span>
+</code></pre></div></div>
+
+<h2 id="running">Running</h2>
+
+<h3 id="development-mode">Development Mode</h3>
+
+<p>Requires running both frontend and backend simultaneously:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># Terminal 1 - Start frontend</span>
+npm run dev
+
+<span class="c"># Terminal 2 - Start backend</span>
+npm run server
+</code></pre></div></div>
+
+<p>Then visit http://localhost:3000</p>
+
+<h3 id="production-mode">Production Mode</h3>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>npm run build
+npm run preview
+</code></pre></div></div>
+
+<h2 id="security">Security</h2>
+
+<p>This tool runs completely locally, making it perfect for:</p>
+<ul>
+  <li>Financial institutions with strict encryption environments</li>
+  <li>Enterprise environments that prohibit data upload or crawling</li>
+  <li>Internal code repositories like Azure DevOps</li>
+</ul>
+
+<p><strong>All operations are performed locally without uploading any data to external servers.</strong></p>
+
+<h2 id="cli-tools">CLI Tools</h2>
+
+<h3 id="compare-commitssh---quick-comparison-between-two-commits">compare-commits.sh - Quick comparison between two commits</h3>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>./scripts/compare-commits.sh /path/to/repo HEAD~10 HEAD
+</code></pre></div></div>
+
+<h3 id="generate-reportsh---generate-comparison-report">generate-report.sh - Generate comparison report</h3>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># Generate Markdown report</span>
+./scripts/generate-report.sh /path/to/repo commit1 commit2
+
+<span class="c"># Generate HTML report (specific file)</span>
+./scripts/generate-report.sh /path/to/repo commit1 commit2 test-data/test.jose html
+
+<span class="c"># Generate JSON report</span>
+./scripts/generate-report.sh /path/to/repo commit1 commit2 <span class="s1">''</span> json
+</code></pre></div></div>
+
+<h2 id="testing">Testing</h2>
+
+<p>Run unit tests:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>npm <span class="nb">test</span>
+</code></pre></div></div>
+
+<h2 id="license">License</h2>
+
+<p>MIT License</p>
+</body></html>
