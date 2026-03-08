@@ -10,7 +10,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>在Spring Boot中使用自定义过滤器和MDC实现高级日志记录 | Zhenyu Gao</title>
+    <title>Advanced Logging in Spring Boot Using Custom Filters and MDC | Zhenyu Gao</title>
     <meta name="author" content="Zhenyu  Gao">
     <meta name="description" content="Backend Engineer at ING Netherlands with a strong enthusiasm for AI and emerging technologies.
 ">
@@ -125,7 +125,7 @@
 <div class="post">
 
   <header class="post-header">
-    <h1 class="post-title">在Spring Boot中使用自定义过滤器和MDC实现高级日志记录</h1>
+    <h1 class="post-title">Advanced Logging in Spring Boot Using Custom Filters and MDC</h1>
     <p class="post-meta">March 8, 2026</p>
     <p class="post-tags">
       <a href="/blog/2026"> <i class="fas fa-calendar fa-sm"></i> 2026 </a>
@@ -134,8 +134,8 @@
           <i class="fas fa-tag fa-sm"></i> Spring</a>  
           <a href="/blog/category/boot">
           <i class="fas fa-tag fa-sm"></i> Boot</a>  
-          <a href="/blog/category/%E6%97%A5%E5%BF%97%E8%AE%B0%E5%BD%95">
-          <i class="fas fa-tag fa-sm"></i> 日志记录</a>  
+          <a href="/blog/category/logging">
+          <i class="fas fa-tag fa-sm"></i> Logging</a>  
           
 
     </p>
@@ -144,15 +144,15 @@
   <article class="post-content">
     
     <div id="markdown-content">
-      <p>在现代Web开发中，日志记录是必不可少的。通过记录日志，开发者可以追踪请求的流程、定位问题并进行性能调优。本文将介绍如何在Spring Boot项目中使用自定义过滤器结合MDC（Mapped Diagnostic Context）技术，实现高级日志记录功能。</p>
+      <p>In modern web development, logging is essential. By logging, developers can trace request flows, locate issues, and perform performance tuning. This article introduces how to implement advanced logging functionality in Spring Boot projects using custom filters combined with MDC (Mapped Diagnostic Context) technology.</p>
 
-<h2 id="什么是mdc">什么是MDC？</h2>
+<h2 id="what-is-mdc">What is MDC?</h2>
 
-<p>MDC（Mapped Diagnostic Context）是SLF4J和Logback提供的功能，用于在同一线程中存储和获取诊断上下文信息。这些上下文信息可以是用户ID、请求ID等动态数据，能够帮助我们在日志中添加有用的调试信息。</p>
+<p>MDC (Mapped Diagnostic Context) is a feature provided by SLF4J and Logback for storing and retrieving diagnostic context information within the same thread. This context information can be dynamic data such as user IDs and request IDs, helping us add useful debugging information to logs.</p>
 
-<h2 id="代码示例">代码示例</h2>
+<h2 id="code-example">Code Example</h2>
 
-<p>下面的代码展示了如何配置和使用自定义过滤器来实现日志记录。</p>
+<p>The following code shows how to configure and use custom filters to implement logging.</p>
 
 <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">package</span> <span class="nn">com.xiaoyu.bootcustomfilters</span><span class="o">;</span>
 
@@ -199,9 +199,9 @@
 <span class="o">}</span>
 </code></pre></div></div>
 
-<h3 id="配置logback">配置Logback</h3>
+<h3 id="configuring-logback">Configuring Logback</h3>
 
-<p>要使上述MDC数据在日志中显示，我们需要配置Logback。在项目的资源目录中创建或修改<code class="language-plaintext highlighter-rouge">logback.xml</code>文件，添加如下配置：</p>
+<p>To make the MDC data appear in logs, we need to configure Logback. Create or modify the <code class="language-plaintext highlighter-rouge">logback.xml</code> file in the project’s resource directory and add the following configuration:</p>
 
 <div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span>
 <span class="nt">&lt;configuration&gt;</span>
@@ -217,39 +217,39 @@
 <span class="nt">&lt;/configuration&gt;</span>
 </code></pre></div></div>
 
-<h2 id="代码解析">代码解析</h2>
+<h2 id="code-analysis">Code Analysis</h2>
 
 <ol>
   <li>
-    <p><strong>FilterConfig类</strong>：这是一个配置类，使用<code class="language-plaintext highlighter-rouge">@Configuration</code>注解标记，表示这是一个Spring配置类。</p>
+    <p><strong>FilterConfig class</strong>: This is a configuration class marked with the <code class="language-plaintext highlighter-rouge">@Configuration</code> annotation, indicating it’s a Spring configuration class.</p>
   </li>
   <li>
-    <p><strong>loggingFilter方法</strong>：该方法返回一个<code class="language-plaintext highlighter-rouge">FilterRegistrationBean</code>，用来注册自定义过滤器。这里注册的是<code class="language-plaintext highlighter-rouge">TraceIdLoggingFilter</code>，并指定了过滤路径为<code class="language-plaintext highlighter-rouge">/users/*</code></p>
+    <p><strong>loggingFilter method</strong>: This method returns a <code class="language-plaintext highlighter-rouge">FilterRegistrationBean</code> used to register a custom filter. Here we register <code class="language-plaintext highlighter-rouge">TraceIdLoggingFilter</code> and specify the filter path as <code class="language-plaintext highlighter-rouge">/users/*</code></p>
   </li>
   <li>
-    <p><strong>TraceIdLoggingFilter内部类</strong>：这是实际的过滤器类，继承自<code class="language-plaintext highlighter-rouge">GenericFilter</code>。在<code class="language-plaintext highlighter-rouge">doFilter</code>方法中，我们使用MDC将一个唯一的<code class="language-plaintext highlighter-rouge">traceId</code>（追踪ID）添加到日志上下文中。在请求处理完毕后，MDC会自动清理这个<code class="language-plaintext highlighter-rouge">traceId</code></p>
+    <p><strong>TraceIdLoggingFilter inner class</strong>: This is the actual filter class extending <code class="language-plaintext highlighter-rouge">GenericFilter</code>. In the <code class="language-plaintext highlighter-rouge">doFilter</code> method, we use MDC to add a unique <code class="language-plaintext highlighter-rouge">traceId</code> (trace ID) to the logging context. After the request processing is complete, MDC automatically cleans up this <code class="language-plaintext highlighter-rouge">traceId</code></p>
   </li>
   <li>
-    <p><strong>generateTraceId方法</strong>：生成一个唯一的UUID作为<code class="language-plaintext highlighter-rouge">traceId</code></p>
+    <p><strong>generateTraceId method</strong>: Generates a unique UUID as the <code class="language-plaintext highlighter-rouge">traceId</code></p>
   </li>
   <li>
-    <p><strong>logback.xml文件</strong>：配置了一个控制台日志输出，并且日志格式中包含了<code class="language-plaintext highlighter-rouge">traceId</code>，从而每条日志都会打印出对应的追踪ID。</p>
+    <p><strong>logback.xml file</strong>: Configures console log output with the log format including <code class="language-plaintext highlighter-rouge">traceId</code>, so each log entry will print the corresponding trace ID.</p>
   </li>
 </ol>
 
-<h2 id="使用说明">使用说明</h2>
+<h2 id="usage">Usage</h2>
 
-<p>当Spring Boot应用启动并且有请求到达<code class="language-plaintext highlighter-rouge">/users/*</code>路径时，<code class="language-plaintext highlighter-rouge">TraceIdLoggingFilter</code>会自动为每个请求生成一个唯一的<code class="language-plaintext highlighter-rouge">traceId</code>，并将其放入MDC。这样，所有在该请求处理过程中生成的日志都会包含这个<code class="language-plaintext highlighter-rouge">traceId</code>，便于追踪和调试。</p>
+<p>When the Spring Boot application starts and a request arrives at the <code class="language-plaintext highlighter-rouge">/users/*</code> path, <code class="language-plaintext highlighter-rouge">TraceIdLoggingFilter</code> will automatically generate a unique <code class="language-plaintext highlighter-rouge">traceId</code> for each request and place it in MDC. This way, all logs generated during the request processing will include this <code class="language-plaintext highlighter-rouge">traceId</code>, making it easier to trace and debug.</p>
 
-<h3 id="结果展示">结果展示</h3>
+<h3 id="results">Results</h3>
 
-<p>在本地curl这个endpoint的时候可以收到回复</p>
+<p>You can curl this endpoint locally and receive a response:</p>
 
 <div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">curl</span><span class="w"> </span><span class="nx">http://localhost:8080/users</span><span class="w">
 </span><span class="p">[{</span><span class="s2">"id"</span><span class="p">:</span><span class="s2">"4d194d1f-187c-40a0-b0df-466d1561248f"</span><span class="p">,</span><span class="s2">"name"</span><span class="p">:</span><span class="s2">"User1"</span><span class="p">,</span><span class="s2">"email"</span><span class="p">:</span><span class="s2">"user1@test.com"</span><span class="p">},{</span><span class="s2">"id"</span><span class="p">:</span><span class="s2">"0ad8c605-84fa-472f-a7c4-d5c58c10495e"</span><span class="p">,</span><span class="s2">"name"</span><span class="p">:</span><span class="s2">"User2"</span><span class="p">,</span><span class="s2">"email"</span><span class="p">:</span><span class="s2">"user2@test.com"</span><span class="p">},{</span><span class="s2">"id"</span><span class="p">:</span><span class="s2">"bdb6e551-4e6c-44bb-b665-44f4d943975f"</span><span class="p">,</span><span class="s2">"name"</span><span class="p">:</span><span class="s2">"User3"</span><span class="p">,</span><span class="s2">"email"</span><span class="p">:</span><span class="s2">"user3@test.com"</span><span class="p">}]</span><span class="w">
 </span></code></pre></div></div>
 
-<p>因为这个call里调用了<code class="language-plaintext highlighter-rouge">users/</code>，所以会在log里输出如下</p>
+<p>Since this call invokes <code class="language-plaintext highlighter-rouge">users/</code>, the log output will be as follows:</p>
 
 <div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="w">
   </span><span class="o">.</span><span class="w">   </span><span class="err">____</span><span class="w">          </span><span class="err">_</span><span class="w">            </span><span class="err">__</span><span class="w"> </span><span class="err">_</span><span class="w"> </span><span class="err">_</span><span class="w">
@@ -263,15 +263,15 @@
 val
 </span></code></pre></div></div>
 
-<p>如果多次call这个endpoint会多次打印<code class="language-plaintext highlighter-rouge">val</code></p>
+<p>If you call this endpoint multiple times, <code class="language-plaintext highlighter-rouge">val</code> will be printed multiple times.</p>
 
-<p>另外我已经把整个package上传到了github，欢迎查看源码 <a href="https://github.com/lafengxiaoyu/MDC_blog/tree/main" rel="external nofollow noopener" target="_blank">github源码</a></p>
+<p>I have also uploaded the entire package to GitHub, welcome to check the source code <a href="https://github.com/lafengxiaoyu/MDC_blog/tree/main" rel="external nofollow noopener" target="_blank">GitHub source code</a></p>
 
-<h2 id="参考文献">参考文献</h2>
+<h2 id="references">References</h2>
 
 <ul>
   <li><a href="https://www.baeldung.com/mdc-in-log4j-2-logback" rel="external nofollow noopener" target="_blank">Improved Java Logging with Mapped Diagnostic Context (MDC)</a></li>
-  <li><a href="https://juejin.cn/post/7200549600590282789" rel="external nofollow noopener" target="_blank">logback-spring.xml配置文件标签（超详解）</a></li>
+  <li><a href="https://juejin.cn/post/7200549600590282789" rel="external nofollow noopener" target="_blank">logback-spring.xml configuration file tags (detailed)</a></li>
   <li><a href="https://www.baeldung.com/spring-boot-add-filter?__cf_chl_tk=zV7PJjjl3sWV2hfVYFaIwDMLSOjtkO930PqvOCKQ-1722198116-0.0.1.1-7465" rel="external nofollow noopener" target="_blank">How to Define a Spring Boot Filter?</a></li>
 </ul>
 

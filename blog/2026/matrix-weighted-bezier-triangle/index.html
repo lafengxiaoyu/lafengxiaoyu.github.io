@@ -10,7 +10,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>矩阵权（Matrix weighted）Bezier三角（曲面）片 | Zhenyu Gao</title>
+    <title>Matrix Weighted Bezier Triangle Patches | Zhenyu Gao</title>
     <meta name="author" content="Zhenyu  Gao">
     <meta name="description" content="Backend Engineer at ING Netherlands with a strong enthusiasm for AI and emerging technologies.
 ">
@@ -125,7 +125,7 @@
 <div class="post">
 
   <header class="post-header">
-    <h1 class="post-title">矩阵权（Matrix weighted）Bezier三角（曲面）片</h1>
+    <h1 class="post-title">Matrix Weighted Bezier Triangle Patches</h1>
     <p class="post-meta">March 8, 2026</p>
     <p class="post-tags">
       <a href="/blog/2026"> <i class="fas fa-calendar fa-sm"></i> 2026 </a>
@@ -134,8 +134,8 @@
           <i class="fas fa-tag fa-sm"></i> CAGD</a>  
           <a href="/blog/category/bezier">
           <i class="fas fa-tag fa-sm"></i> Bezier</a>  
-          <a href="/blog/category/%E6%9B%B2%E9%9D%A2">
-          <i class="fas fa-tag fa-sm"></i> 曲面</a>  
+          <a href="/blog/category/surfaces">
+          <i class="fas fa-tag fa-sm"></i> Surfaces</a>  
           
 
     </p>
@@ -144,26 +144,26 @@
   <article class="post-content">
     
     <div id="markdown-content">
-      <p>参考文献仍然是杨老师的这篇</p>
+      <p>The reference is still Yang’s paper</p>
 <blockquote>
   <p>Matrix weighted rational curves and surfaces</p>
 </blockquote>
 
-<p>文章，结合上篇博文中的算法，再次将其引申到三角面片上</p>
+<p>Combined with the algorithm from the previous blog post, we extend it again to triangular patches.</p>
 
-<h2 id="算法描述">算法描述</h2>
+<h2 id="algorithm-description">Algorithm Description</h2>
 
-<p>假设 $P_{i,j,k}, 0\leq i,j,k\leq n, i+j+k=n$ 是给定的控制点，并且 $M_{ijk}$ 是对应的加权矩阵。矩阵权有理三角面片由下式定义</p>
+<p>Assume $P_{i,j,k}, 0\leq i,j,k\leq n, i+j+k=n$ are the given control points, and $M_{ijk}$ are the corresponding weight matrices. The matrix weighted rational triangular patch is defined by:</p>
 
 <p>[
 Q_3(u,v,w)=[\sum_{i+j+k=n}M_{ijk}B^n_{i,j,k}(u,v,w)]^{-1}\sum_{i+j+k=n}M_{ijk}P_{i,j,k}B^n_{i,j,k}(u,v,w)
 ]</p>
 
-<p>其中 $(u,v)\in[u_{k_1}-1,u_{m+1}]\times[v_{k_2-1},v_{n+1}]$，$B^n_{i,j,k}(u,v,w)=\frac{n!}{i!j!k!}$ 是定义在三角域上的 Bernstein 基函数。</p>
+<p>where $(u,v)\in[u_{k_1}-1,u_{m+1}]\times[v_{k_2-1},v_{n+1}]$, and $B^n_{i,j,k}(u,v,w)=\frac{n!}{i!j!k!}$ is the Bernstein basis function defined on the triangular domain.</p>
 
-<h2 id="代码实现">代码实现</h2>
+<h2 id="code-implementation">Code Implementation</h2>
 
-<p>用 matlab 编写的如下程序为实现函数 <code class="language-plaintext highlighter-rouge">wm_tri.m</code></p>
+<p>The following program written in MATLAB implements the function <code class="language-plaintext highlighter-rouge">wm_tri.m</code></p>
 
 <div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">function</span> <span class="n">trepBer</span> <span class="o">=</span> <span class="n">wm_tri</span><span class="p">(</span> <span class="n">controls</span><span class="p">,</span><span class="n">num</span><span class="p">,</span><span class="n">M</span><span class="p">,</span><span class="n">N</span> <span class="p">)</span>
 <span class="c1">%WM_TRI Summary of this function goes here</span>
@@ -255,9 +255,9 @@ Q_3(u,v,w)=[\sum_{i+j+k=n}M_{ijk}B^n_{i,j,k}(u,v,w)]^{-1}\sum_{i+j+k=n}M_{ijk}P_
 <span class="k">end</span>
 </code></pre></div></div>
 
-<h2 id="示例">示例</h2>
+<h2 id="example">Example</h2>
 
-<p>下面绘制一个瞅瞅哈</p>
+<p>Let’s plot one to see:</p>
 
 <div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">controls</span> <span class="o">=</span> <span class="nb">cell</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">);</span>
 <span class="n">controls</span><span class="p">{</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">}</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">];</span>
@@ -284,33 +284,33 @@ Q_3(u,v,w)=[\sum_{i+j+k=n}M_{ijk}B^n_{i,j,k}(u,v,w)]^{-1}\sum_{i+j+k=n}M_{ijk}P_
 <span class="n">trepBer</span> <span class="o">=</span> <span class="n">wm_tri</span><span class="p">(</span> <span class="n">controls</span><span class="p">,</span><span class="mi">30</span><span class="p">,</span><span class="n">M</span><span class="p">,</span><span class="n">N</span><span class="p">);</span>
 </code></pre></div></div>
 
-<h2 id="结果展示">结果展示</h2>
+<h2 id="results">Results</h2>
 
 <figure>
-  <img src="https://img-blog.csdn.net/20171025101054014?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvbGFmZW5neGlhb3l1/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="矩阵权Bezier三角曲面片示例">
-  <figcaption>矩阵权Bezier三角曲面片示例</figcaption>
+  <img src="/assets/img/blog/bezier-triangle-example.png" alt="Matrix Weighted Bezier Triangle Patch Example">
+  <figcaption>Matrix Weighted Bezier Triangle Patch Example</figcaption>
 </figure>
 
-<h2 id="再来一个例子">再来一个例子</h2>
+<h2 id="another-example">Another Example</h2>
 
-<p>来一整个模型瞅瞅，比如说人脸的例子</p>
+<p>Let’s look at a whole model, for example, a face model</p>
 
 <table>
   <thead>
     <tr>
-      <th style="text-align: center">原本的网格</th>
-      <th style="text-align: center">Bezier曲面片</th>
+      <th style="text-align: center">Original Mesh</th>
+      <th style="text-align: center">Bezier Surface Patch</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <td style="text-align: center"><img src="https://img-blog.csdn.net/20171025103123542?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvbGFmZW5neGlhb3l1/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="原始网格"></td>
-      <td style="text-align: center"><img src="https://img-blog.csdn.net/20171025102752698?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvbGFmZW5neGlhb3l1/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="Bezier曲面片"></td>
+      <td style="text-align: center"><img src="/assets/img/blog/original-mesh.png" alt="Original Mesh"></td>
+      <td style="text-align: center"><img src="/assets/img/blog/bezier-surface-patch.png" alt="Bezier Surface Patch"></td>
     </tr>
   </tbody>
 </table>
 
-<p>老铁没毛病</p>
+<p>Everything looks good!</p>
 
     </div>
   </article>

@@ -1,24 +1,24 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en"><generator uri="https://jekyllrb.com/" version="4.4.1">Jekyll</generator><link href="https://lafengxiaoyu.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="https://lafengxiaoyu.github.io/" rel="alternate" type="text/html" hreflang="en" /><updated>2026-03-08T11:46:43+00:00</updated><id>https://lafengxiaoyu.github.io/feed.xml</id><title type="html">Zhenyu Gao</title><subtitle>Backend Engineer at ING Netherlands with a strong enthusiasm for AI and emerging technologies.
-</subtitle><entry><title type="html">矩阵权（Matrix weighted）Bezier三角（曲面）片</title><link href="https://lafengxiaoyu.github.io/blog/2026/matrix-weighted-bezier-triangle/" rel="alternate" type="text/html" title="矩阵权（Matrix weighted）Bezier三角（曲面）片" /><published>2026-03-08T04:00:00+00:00</published><updated>2026-03-08T04:00:00+00:00</updated><id>https://lafengxiaoyu.github.io/blog/2026/matrix-weighted-bezier-triangle</id><content type="html" xml:base="https://lafengxiaoyu.github.io/blog/2026/matrix-weighted-bezier-triangle/"><![CDATA[<p>参考文献仍然是杨老师的这篇</p>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en"><generator uri="https://jekyllrb.com/" version="4.4.1">Jekyll</generator><link href="https://lafengxiaoyu.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="https://lafengxiaoyu.github.io/" rel="alternate" type="text/html" hreflang="en" /><updated>2026-03-08T12:11:13+00:00</updated><id>https://lafengxiaoyu.github.io/feed.xml</id><title type="html">Zhenyu Gao</title><subtitle>Backend Engineer at ING Netherlands with a strong enthusiasm for AI and emerging technologies.
+</subtitle><entry><title type="html">Matrix Weighted Bezier Triangle Patches</title><link href="https://lafengxiaoyu.github.io/blog/2026/matrix-weighted-bezier-triangle/" rel="alternate" type="text/html" title="Matrix Weighted Bezier Triangle Patches" /><published>2026-03-08T04:00:00+00:00</published><updated>2026-03-08T04:00:00+00:00</updated><id>https://lafengxiaoyu.github.io/blog/2026/matrix-weighted-bezier-triangle</id><content type="html" xml:base="https://lafengxiaoyu.github.io/blog/2026/matrix-weighted-bezier-triangle/"><![CDATA[<p>The reference is still Yang’s paper</p>
 <blockquote>
   <p>Matrix weighted rational curves and surfaces</p>
 </blockquote>
 
-<p>文章，结合上篇博文中的算法，再次将其引申到三角面片上</p>
+<p>Combined with the algorithm from the previous blog post, we extend it again to triangular patches.</p>
 
-<h2 id="算法描述">算法描述</h2>
+<h2 id="algorithm-description">Algorithm Description</h2>
 
-<p>假设 $P_{i,j,k}, 0\leq i,j,k\leq n, i+j+k=n$ 是给定的控制点，并且 $M_{ijk}$ 是对应的加权矩阵。矩阵权有理三角面片由下式定义</p>
+<p>Assume $P_{i,j,k}, 0\leq i,j,k\leq n, i+j+k=n$ are the given control points, and $M_{ijk}$ are the corresponding weight matrices. The matrix weighted rational triangular patch is defined by:</p>
 
 <p>[
 Q_3(u,v,w)=[\sum_{i+j+k=n}M_{ijk}B^n_{i,j,k}(u,v,w)]^{-1}\sum_{i+j+k=n}M_{ijk}P_{i,j,k}B^n_{i,j,k}(u,v,w)
 ]</p>
 
-<p>其中 $(u,v)\in[u_{k_1}-1,u_{m+1}]\times[v_{k_2-1},v_{n+1}]$，$B^n_{i,j,k}(u,v,w)=\frac{n!}{i!j!k!}$ 是定义在三角域上的 Bernstein 基函数。</p>
+<p>where $(u,v)\in[u_{k_1}-1,u_{m+1}]\times[v_{k_2-1},v_{n+1}]$, and $B^n_{i,j,k}(u,v,w)=\frac{n!}{i!j!k!}$ is the Bernstein basis function defined on the triangular domain.</p>
 
-<h2 id="代码实现">代码实现</h2>
+<h2 id="code-implementation">Code Implementation</h2>
 
-<p>用 matlab 编写的如下程序为实现函数 <code class="language-plaintext highlighter-rouge">wm_tri.m</code></p>
+<p>The following program written in MATLAB implements the function <code class="language-plaintext highlighter-rouge">wm_tri.m</code></p>
 
 <div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">function</span> <span class="n">trepBer</span> <span class="o">=</span> <span class="n">wm_tri</span><span class="p">(</span> <span class="n">controls</span><span class="p">,</span><span class="n">num</span><span class="p">,</span><span class="n">M</span><span class="p">,</span><span class="n">N</span> <span class="p">)</span>
 <span class="c1">%WM_TRI Summary of this function goes here</span>
@@ -110,9 +110,9 @@ Q_3(u,v,w)=[\sum_{i+j+k=n}M_{ijk}B^n_{i,j,k}(u,v,w)]^{-1}\sum_{i+j+k=n}M_{ijk}P_
 <span class="k">end</span>
 </code></pre></div></div>
 
-<h2 id="示例">示例</h2>
+<h2 id="example">Example</h2>
 
-<p>下面绘制一个瞅瞅哈</p>
+<p>Let’s plot one to see:</p>
 
 <div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">controls</span> <span class="o">=</span> <span class="nb">cell</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">);</span>
 <span class="n">controls</span><span class="p">{</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">}</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">];</span>
@@ -139,44 +139,44 @@ Q_3(u,v,w)=[\sum_{i+j+k=n}M_{ijk}B^n_{i,j,k}(u,v,w)]^{-1}\sum_{i+j+k=n}M_{ijk}P_
 <span class="n">trepBer</span> <span class="o">=</span> <span class="n">wm_tri</span><span class="p">(</span> <span class="n">controls</span><span class="p">,</span><span class="mi">30</span><span class="p">,</span><span class="n">M</span><span class="p">,</span><span class="n">N</span><span class="p">);</span>
 </code></pre></div></div>
 
-<h2 id="结果展示">结果展示</h2>
+<h2 id="results">Results</h2>
 
 <figure>
-  <img src="https://img-blog.csdn.net/20171025101054014?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvbGFmZW5neGlhb3l1/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="矩阵权Bezier三角曲面片示例" />
-  <figcaption>矩阵权Bezier三角曲面片示例</figcaption>
+  <img src="/assets/img/blog/bezier-triangle-example.png" alt="Matrix Weighted Bezier Triangle Patch Example" />
+  <figcaption>Matrix Weighted Bezier Triangle Patch Example</figcaption>
 </figure>
 
-<h2 id="再来一个例子">再来一个例子</h2>
+<h2 id="another-example">Another Example</h2>
 
-<p>来一整个模型瞅瞅，比如说人脸的例子</p>
+<p>Let’s look at a whole model, for example, a face model</p>
 
 <table>
   <thead>
     <tr>
-      <th style="text-align: center">原本的网格</th>
-      <th style="text-align: center">Bezier曲面片</th>
+      <th style="text-align: center">Original Mesh</th>
+      <th style="text-align: center">Bezier Surface Patch</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <td style="text-align: center"><img src="https://img-blog.csdn.net/20171025103123542?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvbGFmZW5neGlhb3l1/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="原始网格" /></td>
-      <td style="text-align: center"><img src="https://img-blog.csdn.net/20171025102752698?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvbGFmZW5neGlhb3l1/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="Bezier曲面片" /></td>
+      <td style="text-align: center"><img src="/assets/img/blog/original-mesh.png" alt="Original Mesh" /></td>
+      <td style="text-align: center"><img src="/assets/img/blog/bezier-surface-patch.png" alt="Bezier Surface Patch" /></td>
     </tr>
   </tbody>
 </table>
 
-<p>老铁没毛病</p>]]></content><author><name></name></author><category term="CAGD" /><category term="Bezier" /><category term="曲面" /><summary type="html"><![CDATA[参考文献仍然是杨老师的这篇 Matrix weighted rational curves and surfaces]]></summary></entry><entry><title type="html">Apache Avro 1.11.0 入门 (Java 版本)</title><link href="https://lafengxiaoyu.github.io/blog/2026/apache-avro-1.11.0-getting-started/" rel="alternate" type="text/html" title="Apache Avro 1.11.0 入门 (Java 版本)" /><published>2026-03-08T03:00:00+00:00</published><updated>2026-03-08T03:00:00+00:00</updated><id>https://lafengxiaoyu.github.io/blog/2026/apache-avro-1.11.0-getting-started</id><content type="html" xml:base="https://lafengxiaoyu.github.io/blog/2026/apache-avro-1.11.0-getting-started/"><![CDATA[<p>本文参考原版英文文档：</p>
+<p>Everything looks good!</p>]]></content><author><name></name></author><category term="CAGD" /><category term="Bezier" /><category term="Surfaces" /><summary type="html"><![CDATA[The reference is still Yang’s paper Matrix weighted rational curves and surfaces]]></summary></entry><entry><title type="html">Getting Started with Apache Avro 1.11.0 (Java)</title><link href="https://lafengxiaoyu.github.io/blog/2026/apache-avro-1.11.0-getting-started/" rel="alternate" type="text/html" title="Getting Started with Apache Avro 1.11.0 (Java)" /><published>2026-03-08T03:00:00+00:00</published><updated>2026-03-08T03:00:00+00:00</updated><id>https://lafengxiaoyu.github.io/blog/2026/apache-avro-1.11.0-getting-started</id><content type="html" xml:base="https://lafengxiaoyu.github.io/blog/2026/apache-avro-1.11.0-getting-started/"><![CDATA[<p>This article references the original English documentation:</p>
 <blockquote>
   <p><a href="https://avro.apache.org/docs/current/gettingstartedjava.html">Apache Avro™ 1.11.0 Getting Started (Java)</a></p>
 </blockquote>
 
-<p>这是使用 Java 开始使用 Apache Avro™ 的简短指南。 本指南仅涵盖使用 Avro 进行数据序列化；请参阅 Patrick Hunt 的 <a href="https://github.com/phunt/avro-rpc-quickstart">Avro RPC快速入门</a>，了解如何使用 Avro 进行 RPC</p>
+<p>This is a short guide to getting started with Apache Avro™ using Java. This guide only covers using Avro for data serialization; for information on using Avro for RPC, see Patrick Hunt’s <a href="https://github.com/phunt/avro-rpc-quickstart">Avro RPC Quick Start</a></p>
 
-<h2 id="1-下载">1. 下载</h2>
+<h2 id="1-download">1. Download</h2>
 
-<p>可以从 <a href="https://avro.apache.org/releases.html">Apache Avro™ 发布页面</a>下载 C、C++、C#、Java、PHP、Python 和 Ruby 的 Avro 实现。 本指南使用撰写本文时的最新版本 <code class="language-plaintext highlighter-rouge">Avro 1.11.0</code>。 对于本指南中的示例，请下载 <code class="language-plaintext highlighter-rouge">avro-1.11.0.jar</code> 和 <code class="language-plaintext highlighter-rouge">avro-tools-1.11.0.jar</code></p>
+<p>Avro implementations for C, C++, C#, Java, PHP, Python, and Ruby can be downloaded from the <a href="https://avro.apache.org/releases.html">Apache Avro™ releases page</a>. This guide uses the latest version available at the time of writing, <code class="language-plaintext highlighter-rouge">Avro 1.11.0</code>. For the examples in this guide, download <code class="language-plaintext highlighter-rouge">avro-1.11.0.jar</code> and <code class="language-plaintext highlighter-rouge">avro-tools-1.11.0.jar</code></p>
 
-<p>或者，如果您使用的是 Maven，请将以下依赖项添加到您的 POM：</p>
+<p>Alternatively, if you’re using Maven, add the following dependency to your POM:</p>
 
 <div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;dependency&gt;</span>
   <span class="nt">&lt;groupId&gt;</span>org.apache.avro<span class="nt">&lt;/groupId&gt;</span>
@@ -185,7 +185,7 @@ Q_3(u,v,w)=[\sum_{i+j+k=n}M_{ijk}B^n_{i,j,k}(u,v,w)]^{-1}\sum_{i+j+k=n}M_{ijk}P_
 <span class="nt">&lt;/dependency&gt;</span>
 </code></pre></div></div>
 
-<p>以及 Avro Maven 插件（用于执行代码生成）：</p>
+<p>And the Avro Maven plugin (for executing code generation):</p>
 
 <div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;plugin&gt;</span>
   <span class="nt">&lt;groupId&gt;</span>org.apache.avro<span class="nt">&lt;/groupId&gt;</span>
@@ -214,11 +214,11 @@ Q_3(u,v,w)=[\sum_{i+j+k=n}M_{ijk}B^n_{i,j,k}(u,v,w)]^{-1}\sum_{i+j+k=n}M_{ijk}P_
 <span class="nt">&lt;/plugin&gt;</span>
 </code></pre></div></div>
 
-<p>您还可以从源代码构建所需的 Avro jar包。不过构建 Avro 超出了本指南的范围；有关更多信息，请参阅 wiki 中的<a href="https://cwiki.apache.org/AVRO/Build+Documentation">构建文档页面</a></p>
+<p>You can also build the required Avro jar files from source. However, building Avro is beyond the scope of this guide; for more information, see the <a href="https://cwiki.apache.org/AVRO/Build+Documentation">Build Documentation page</a> in the wiki.</p>
 
-<h2 id="2-定义模板schema">2. 定义模板（schema）</h2>
+<h2 id="2-defining-a-schema">2. Defining a Schema</h2>
 
-<p>Avro 模板是使用 JSON 定义的。模板由<a href="https://avro.apache.org/docs/current/spec.html#schema_primitive">基本类型</a>（null、boolean、int、long、float、double、bytes 和 string）和<a href="https://avro.apache.org/docs/current/spec.html#schema_complex">复杂类型</a>（record、enum、array、map、union 和 fixed）组成。您可以从规范文档中了解有关 Avro模板和类型的更多信息，但现在让我们从一个简单的schema示例 <code class="language-plaintext highlighter-rouge">user.avsc</code> 开始：</p>
+<p>Avro schemas are defined using JSON. Schemas are composed of <a href="https://avro.apache.org/docs/current/spec.html#schema_primitive">primitive types</a> (null, boolean, int, long, float, double, bytes, and string) and <a href="https://avro.apache.org/docs/current/spec.html#schema_complex">complex types</a> (record, enum, array, map, union, and fixed). You can learn more about Avro schemas and types from the specification documentation, but for now let’s start with a simple schema example <code class="language-plaintext highlighter-rouge">user.avsc</code>:</p>
 
 <div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="nl">"namespace"</span><span class="p">:</span><span class="w"> </span><span class="s2">"example.avro"</span><span class="p">,</span><span class="w">
  </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"record"</span><span class="p">,</span><span class="w">
@@ -231,31 +231,31 @@ Q_3(u,v,w)=[\sum_{i+j+k=n}M_{ijk}B^n_{i,j,k}(u,v,w)]^{-1}\sum_{i+j+k=n}M_{ijk}P_
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div></div>
 
-<p>此模式定义了代表假设用户的记录。 （请注意，模式文件只能包含单个模式定义）记录定义至少必须包括其类型（<code class="language-plaintext highlighter-rouge">"type":"record"</code>）、一个名称（<code class="language-plaintext highlighter-rouge">"name":"User"</code>）和字段（在本例中为 <code class="language-plaintext highlighter-rouge">name</code>、<code class="language-plaintext highlighter-rouge">favorite_number</code> 和 <code class="language-plaintext highlighter-rouge">favorite_color</code>）。我们还定义了一个命名空间（<code class="language-plaintext highlighter-rouge">"namespace":"example.avro"</code>），它与 <code class="language-plaintext highlighter-rouge">name</code> 属性一起定义了模式的 “full name” 也就是”全名”（在本例中为 <code class="language-plaintext highlighter-rouge">example.avro.User</code>）。</p>
+<p>This schema defines a record representing a hypothetical user. (Note that a schema file can only contain a single schema definition.) A record definition must include at minimum its type (<code class="language-plaintext highlighter-rouge">"type":"record"</code>), a name (<code class="language-plaintext highlighter-rouge">"name":"User"</code>), and fields (in this case <code class="language-plaintext highlighter-rouge">name</code>, <code class="language-plaintext highlighter-rouge">favorite_number</code>, and <code class="language-plaintext highlighter-rouge">favorite_color</code>). We also defined a namespace (<code class="language-plaintext highlighter-rouge">"namespace":"example.avro"</code>), which together with the <code class="language-plaintext highlighter-rouge">name</code> attribute defines the schema’s “full name” (in this case <code class="language-plaintext highlighter-rouge">example.avro.User</code>).</p>
 
-<p>字段是通过对象数组定义的，每个对象定义一个名称和类型（其他属性是可选的，请参阅<a href="https://avro.apache.org/docs/current/spec.html#schema_record">记录规范文档</a>以获取更多详细信息）。字段的类型属性是另一个模式对象，它可以是原始类型或复杂类型。例如，我们的 <code class="language-plaintext highlighter-rouge">User</code> schema 的 <code class="language-plaintext highlighter-rouge">name</code> 字段是原始类型字符串，而 <code class="language-plaintext highlighter-rouge">favorite_number</code> 和 <code class="language-plaintext highlighter-rouge">favorite_color</code> 字段都是联合字符串(<code class="language-plaintext highlighter-rouge">unions</code>)，由 JSON 数组表示。 <code class="language-plaintext highlighter-rouge">unions</code> 是一种复杂类型，可以是数组中列出的任何类型；例如， <code class="language-plaintext highlighter-rouge">favorite_number</code> 可以是 <code class="language-plaintext highlighter-rouge">int</code> 或 <code class="language-plaintext highlighter-rouge">null</code>，本质上它是一个可选字段。</p>
+<p>Fields are defined through an array of objects, with each object defining a name and type (other attributes are optional, see the <a href="https://avro.apache.org/docs/current/spec.html#schema_record">record specification documentation</a> for more details). The field’s type attribute is another schema object, which can be a primitive type or a complex type. For example, our <code class="language-plaintext highlighter-rouge">User</code> schema’s <code class="language-plaintext highlighter-rouge">name</code> field is the primitive type string, while the <code class="language-plaintext highlighter-rouge">favorite_number</code> and <code class="language-plaintext highlighter-rouge">favorite_color</code> fields are both unions, represented by JSON arrays. <code class="language-plaintext highlighter-rouge">unions</code> is a complex type that can be any of the types listed in the array; for example, <code class="language-plaintext highlighter-rouge">favorite_number</code> can be <code class="language-plaintext highlighter-rouge">int</code> or <code class="language-plaintext highlighter-rouge">null</code>, essentially making it an optional field.</p>
 
-<h2 id="3-使用代码生成进行序列化和反序列化">3. 使用代码生成进行序列化和反序列化</h2>
+<h2 id="3-serialization-and-deserialization-with-code-generation">3. Serialization and Deserialization with Code Generation</h2>
 
-<h3 id="31-编译schema模板">3.1 编译Schema(模板)</h3>
+<h3 id="31-compiling-the-schema">3.1 Compiling the Schema</h3>
 
-<p>代码生成允许我们根据之前定义的模式自动创建类。一旦我们定义了相关的类，就不需要在我们的程序中直接使用模式。我们使用 avro-tools jar包生成代码如下：</p>
+<p>Code generation allows us to automatically create classes based on the schema we defined earlier. Once we have defined the relevant classes, we don’t need to use schemas directly in our programs. We use the avro-tools jar package to generate code as follows:</p>
 
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>java <span class="nt">-jar</span> /path/to/avro-tools-1.11.0.jar compile schema &lt;schema file&gt; &lt;destination&gt;
 </code></pre></div></div>
 
-<p>这将根据提供的目标文件夹中架构的命名空间在包中生成适当的源文件。例如，要从上面定义的模式中生成包 <code class="language-plaintext highlighter-rouge">example.avro</code> 中的用户类，运行</p>
+<p>This generates appropriate source files in a package based on the schema’s namespace in the provided target directory. For example, to generate a User class in the package <code class="language-plaintext highlighter-rouge">example.avro</code> from the schema defined above, run:</p>
 
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>java <span class="nt">-jar</span> /path/to/avro-tools-1.11.0.jar compile schema user.avsc <span class="nb">.</span>
 </code></pre></div></div>
 
-<p>请注意，如果您使用 Avro Maven 插件，则无需手动调用模式编译器；该插件会自动对配置的源目录中存在的任何 <code class="language-plaintext highlighter-rouge">.avsc</code> 文件执行代码生成</p>
+<p>Note that if you’re using the Avro Maven plugin, you don’t need to manually invoke the schema compiler; the plugin automatically performs code generation on any <code class="language-plaintext highlighter-rouge">.avsc</code> files present in the configured source directory.</p>
 
-<h3 id="32-创建users用户">3.2 创建Users(用户)</h3>
+<h3 id="32-creating-users">3.2 Creating Users</h3>
 
-<p>现在我们已经完成了代码生成，让我们创建一些用户，将它们序列化为磁盘上的数据文件，然后读回文件并反序列化用户对象。</p>
+<p>Now that we’ve completed code generation, let’s create some users, serialize them to a data file on disk, and then read back the file and deserialize the user objects.</p>
 
-<p>首先让我们创建一些用户并设置他们的字段。</p>
+<p>First, let’s create some users and set their fields.</p>
 
 <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nc">User</span> <span class="n">user1</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">User</span><span class="o">();</span>
 <span class="n">user1</span><span class="o">.</span><span class="na">setName</span><span class="o">(</span><span class="s">"Alyssa"</span><span class="o">);</span>
@@ -273,13 +273,13 @@ Q_3(u,v,w)=[\sum_{i+j+k=n}M_{ijk}B^n_{i,j,k}(u,v,w)]^{-1}\sum_{i+j+k=n}M_{ijk}P_
              <span class="o">.</span><span class="na">build</span><span class="o">();</span>
 </code></pre></div></div>
 
-<p>如本例所示，可以通过直接调用构造函数或使用构建器来创建 Avro 对象。与构造函数不同，生成器将自动设置模式中指定的任何默认值。此外，构建器会按设置验证数据，而直接构造的对象在对象被序列化之前不会导致错误。但是，直接使用构造函数通常会提供更好的性能，因为构造函数会在写入数据结构之前创建数据结构的副本。</p>
+<p>As shown in this example, Avro objects can be created by directly calling constructors or using builders. Unlike constructors, builders automatically set any default values specified in the schema. Additionally, builders validate data as it’s set, while directly constructed objects won’t cause errors until the object is serialized. However, using constructors directly typically provides better performance, as constructors create copies of data structures before writing to them.</p>
 
-<p>请注意，我们没有设置 <code class="language-plaintext highlighter-rouge">user1</code> 最喜欢的颜色。由于该记录的类型为 <code class="language-plaintext highlighter-rouge">["string", "null"]</code>，我们可以将其设置为字符串或将其保留为 <code class="language-plaintext highlighter-rouge">null</code>；它本质上是可选的。同样，我们将 <code class="language-plaintext highlighter-rouge">user3</code> 的最喜欢的数字设置为 <code class="language-plaintext highlighter-rouge">null</code>（使用构建器需要设置所有字段，即它们为 <code class="language-plaintext highlighter-rouge">null</code>）</p>
+<p>Note that we didn’t set user1’s favorite color. Since the type of this record is <code class="language-plaintext highlighter-rouge">["string", "null"]</code>, we can set it to a string or leave it as <code class="language-plaintext highlighter-rouge">null</code>; it’s essentially optional. Similarly, we set user3’s favorite number to <code class="language-plaintext highlighter-rouge">null</code> (using builders requires setting all fields, even if they’re <code class="language-plaintext highlighter-rouge">null</code>).</p>
 
-<h3 id="33-serializing序列化">3.3 Serializing(序列化)</h3>
+<h3 id="33-serializing">3.3 Serializing</h3>
 
-<p>现在让我们将用户<code class="language-plaintext highlighter-rouge">Users</code>序列化到磁盘</p>
+<p>Now let’s serialize the users to disk.</p>
 
 <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Serialize user1, user2 and user3 to disk</span>
 <span class="nc">DatumWriter</span><span class="o">&lt;</span><span class="nc">User</span><span class="o">&gt;</span> <span class="n">userDatumWriter</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">SpecificDatumWriter</span><span class="o">&lt;</span><span class="nc">User</span><span class="o">&gt;(</span><span class="nc">User</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
@@ -291,13 +291,13 @@ Q_3(u,v,w)=[\sum_{i+j+k=n}M_{ijk}B^n_{i,j,k}(u,v,w)]^{-1}\sum_{i+j+k=n}M_{ijk}P_
 <span class="n">dataFileWriter</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
 </code></pre></div></div>
 
-<p>我们创建了一个 <code class="language-plaintext highlighter-rouge">DatumWriter</code>，它将 Java 对象转换为内存中的序列化格式。 <code class="language-plaintext highlighter-rouge">SpecificDatumWriter</code> 类与生成的类一起使用，并从指定的生成类型中提取模式。</p>
+<p>We created a <code class="language-plaintext highlighter-rouge">DatumWriter</code> that converts Java objects to in-memory serialized format. The <code class="language-plaintext highlighter-rouge">SpecificDatumWriter</code> class works with generated classes and extracts the schema from the specified generated type.</p>
 
-<p>接下来我们创建一个 <code class="language-plaintext highlighter-rouge">DataFileWriter</code>，它将序列化的记录以及模式写入 <code class="language-plaintext highlighter-rouge">dataFileWriter.create</code> 调用中指定的文件。我们通过调用 <code class="language-plaintext highlighter-rouge">dataFileWriter.append</code> 方法将用户写入文件。完成写入后，我们关闭数据文件</p>
+<p>Next we create a <code class="language-plaintext highlighter-rouge">DataFileWriter</code> that writes serialized records along with the schema to the file specified in the <code class="language-plaintext highlighter-rouge">dataFileWriter.create</code> call. We write users to the file by calling the <code class="language-plaintext highlighter-rouge">dataFileWriter.append</code> method. After writing is complete, we close the data file.</p>
 
-<h3 id="34-deserializing反序列化">3.4 Deserializing(反序列化)</h3>
+<h3 id="34-deserializing">3.4 Deserializing</h3>
 
-<p>最后，让我们反序列化我们刚刚创建的数据文件</p>
+<p>Finally, let’s deserialize the data file we just created.</p>
 
 <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Deserialize Users from disk</span>
 <span class="nc">DatumReader</span><span class="o">&lt;</span><span class="nc">User</span><span class="o">&gt;</span> <span class="n">userDatumReader</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">SpecificDatumReader</span><span class="o">&lt;</span><span class="nc">User</span><span class="o">&gt;(</span><span class="nc">User</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
@@ -312,51 +312,51 @@ Q_3(u,v,w)=[\sum_{i+j+k=n}M_{ijk}B^n_{i,j,k}(u,v,w)]^{-1}\sum_{i+j+k=n}M_{ijk}P_
 <span class="o">}</span>
 </code></pre></div></div>
 
-<p>此代码段将输出：</p>
+<p>This code snippet will output:</p>
 
 <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">{</span><span class="s">"name"</span><span class="o">:</span> <span class="s">"Alyssa"</span><span class="o">,</span> <span class="s">"favorite_number"</span><span class="o">:</span> <span class="mi">256</span><span class="o">,</span> <span class="s">"favorite_color"</span><span class="o">:</span> <span class="kc">null</span><span class="o">}</span>
 <span class="o">{</span><span class="s">"name"</span><span class="o">:</span> <span class="s">"Ben"</span><span class="o">,</span> <span class="s">"favorite_number"</span><span class="o">:</span> <span class="mi">7</span><span class="o">,</span> <span class="s">"favorite_color"</span><span class="o">:</span> <span class="s">"red"</span><span class="o">}</span>
 <span class="o">{</span><span class="s">"name"</span><span class="o">:</span> <span class="s">"Charlie"</span><span class="o">,</span> <span class="s">"favorite_number"</span><span class="o">:</span> <span class="kc">null</span><span class="o">,</span> <span class="s">"favorite_color"</span><span class="o">:</span> <span class="s">"blue"</span><span class="o">}</span>
 </code></pre></div></div>
 
-<p>反序列化与序列化非常相似。我们创建了一个<code class="language-plaintext highlighter-rouge">SpecificDatumReader</code>，类似于我们在序列化中使用的<code class="language-plaintext highlighter-rouge">SpecificDatumWriter</code>，它将内存中的序列化项转换为我们生成的类的实例，在本例中为<code class="language-plaintext highlighter-rouge">User</code>。我们将 <code class="language-plaintext highlighter-rouge">DatumReader </code>和之前创建的 <code class="language-plaintext highlighter-rouge">File</code> 传递给 <code class="language-plaintext highlighter-rouge">DataFileReader</code>，类似于 <code class="language-plaintext highlighter-rouge">DataFileWriter</code>，它读取 <code class="language-plaintext highlighter-rouge">writer</code> 使用的模式以及磁盘上文件中的数据。将使用文件中包含的写入者模式和读取器提供的模式（在本例中为 <code class="language-plaintext highlighter-rouge">User</code> 类）读取数据。编写者的模式需要知道写入字段的顺序，而读者的模式需要知道需要哪些字段以及如何填写自文件写入以来添加的字段的默认值。如果两个架构之间存在差异，则根据架构解析规范对其进行解析。</p>
+<p>Deserialization is very similar to serialization. We created a <code class="language-plaintext highlighter-rouge">SpecificDatumReader</code>, similar to the <code class="language-plaintext highlighter-rouge">SpecificDatumWriter</code> we used in serialization, which converts in-memory serialized items to instances of our generated class, in this case <code class="language-plaintext highlighter-rouge">User</code>. We pass the <code class="language-plaintext highlighter-rouge">DatumReader</code> and the previously created <code class="language-plaintext highlighter-rouge">File</code> to <code class="language-plaintext highlighter-rouge">DataFileReader</code>. Similar to <code class="language-plaintext highlighter-rouge">DataFileWriter</code>, it reads the schema used by the <code class="language-plaintext highlighter-rouge">writer</code> and the data from the file on disk. Data is read using the writer’s schema contained in the file and the reader’s schema provided (in this case the <code class="language-plaintext highlighter-rouge">User</code> class). The writer’s schema needs to know the order of fields written, while the reader’s schema needs to know which fields are required and how to fill in default values for fields added since the file was written. If there are differences between the two schemas, they are resolved according to the schema resolution specification.</p>
 
-<p>接下来我们使用 <code class="language-plaintext highlighter-rouge">DataFileReader</code> 遍历序列化的用户并将反序列化的对象打印到标准输出。注意我们如何执行迭代：我们创建了一个单独的用户对象，我们将当前反序列化的用户存储在其中，并将这个记录对象传递给 <code class="language-plaintext highlighter-rouge">dataFileReader.next</code> 的每个调用。这是一种性能优化，允许 <code class="language-plaintext highlighter-rouge">DataFileReader</code> 重用相同的用户对象，而不是为每次迭代分配一个新用户，如果我们反序列化一个大数据文件，这在对象分配和垃圾收集方面可能非常昂贵。虽然这种技术是遍历数据文件的标准方法，但如果性能不是问题，也可以使用 <code class="language-plaintext highlighter-rouge">for (User user : dataFileReader)</code></p>
+<p>Next we use <code class="language-plaintext highlighter-rouge">DataFileReader</code> to iterate through the serialized users and print the deserialized objects to standard output. Note how we perform the iteration: we create a single user object where we store the currently deserialized user, and pass this record object to each call to <code class="language-plaintext highlighter-rouge">dataFileReader.next</code>. This is a performance optimization that allows <code class="language-plaintext highlighter-rouge">DataFileReader</code> to reuse the same user object instead of allocating a new user for each iteration, which can be very expensive in terms of object allocation and garbage collection if we’re deserializing a large data file. While this technique is the standard way to iterate through data files, if performance isn’t an issue, you can also use <code class="language-plaintext highlighter-rouge">for (User user : dataFileReader)</code></p>
 
-<h3 id="35-编译并运行示例代码">3.5 编译并运行示例代码</h3>
+<h3 id="35-compiling-and-running-the-example-code">3.5 Compiling and Running the Example Code</h3>
 
-<p>此示例代码作为 Maven 项目包含在 Avro 文档的<code class="language-plaintext highlighter-rouge">examples/java-example</code> 目录中。在此目录中，执行以下命令来构建和运行示例：</p>
+<p>This example code is included as a Maven project in the Avro documentation’s <code class="language-plaintext highlighter-rouge">examples/java-example</code> directory. In this directory, run the following commands to build and run the example:</p>
 
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>mvn compile <span class="c"># includes code generation via Avro Maven plugin</span>
 <span class="nv">$ </span>mvn <span class="nt">-q</span> <span class="nb">exec</span>:java <span class="nt">-Dexec</span>.mainClass<span class="o">=</span>example.SpecificMain
 </code></pre></div></div>
 
-<h3 id="36-beta-功能生成更快的代码">3.6 Beta 功能：生成更快的代码</h3>
+<h3 id="36-beta-feature-generating-faster-code">3.6 Beta Feature: Generating Faster Code</h3>
 
-<p>在此版本中，我们引入了一种新的代码生成方法，可将对象的解码速度提高 10% 以上，并将编码速度提高 30% 以上（未来的性能增强正在进行中）。为了确保将此更改顺利引入生产系统，此功能由功能标志控制，系统属性 <code class="language-plaintext highlighter-rouge">org.apache.avro.specific.use_custom_coders</code>。在第一个版本中，此功能默认关闭。要打开它，请在运行时将系统标志设置为 <code class="language-plaintext highlighter-rouge">true</code>。例如，在上面的示例中，您可以启用更”胖”的编码器，如下所示：</p>
+<p>In this release, we’ve introduced a new code generation method that can improve object decoding speed by over 10% and encoding speed by over 30% (future performance enhancements are in progress). To ensure this change is smoothly introduced into production systems, this feature is controlled by a feature flag, the system property <code class="language-plaintext highlighter-rouge">org.apache.avro.specific.use_custom_coders</code>. In the first release, this feature is off by default. To turn it on, set the system flag to <code class="language-plaintext highlighter-rouge">true</code> at runtime. For example, in the example above, you can enable the “fatter” encoder as follows:</p>
 
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>mvn <span class="nt">-q</span> <span class="nb">exec</span>:java <span class="nt">-Dexec</span>.mainClass<span class="o">=</span>example.SpecificMain <span class="se">\</span>
     <span class="nt">-Dorg</span>.apache.avro.specific.use_custom_coders<span class="o">=</span><span class="nb">true</span>
 </code></pre></div></div>
 
-<p>请注意，您不必重新编译 Avro 模式即可访问此功能。该功能被编译并内置到您的代码中，您可以在运行时使用功能标志打开和关闭它。因此，例如，您可以在测试期间将其打开，然后在生产中关闭。或者，您可以在生产中将其打开，如果出现问题，请迅速将其关闭。</p>
+<p>Note that you don’t need to recompile Avro schemas to access this feature. The feature is compiled and built into your code, and you can turn it on and off at runtime using the feature flag. Therefore, for example, you can turn it on during testing and then turn it off in production. Or you can turn it on in production and quickly turn it off if issues arise.</p>
 
-<p>我们鼓励 Avro 社区尽早使用这一新功能，以帮助建立信心。 （对于那些为云计算资源一次性付费的人来说，它可以带来有意义的成本节约。）随着信心的建立，我们将默认启用此功能，并最终消除功能标志（和旧代码）</p>
+<p>We encourage the Avro community to use this new feature early to help build confidence. (For those paying for cloud computing resources once, it can lead to meaningful cost savings.) As confidence builds, we will enable this feature by default and eventually eliminate the feature flag (and old code).</p>
 
-<h2 id="4-无需代码生成的序列化和反序列化">4. 无需代码生成的序列化和反序列化</h2>
+<h2 id="4-serialization-and-deserialization-without-code-generation">4. Serialization and Deserialization Without Code Generation</h2>
 
-<p>Avro 中的数据始终与其对应的模式一起存储，这意味着无论我们是否提前知道模式，我们都可以随时读取序列化项目。这允许我们在不生成代码的情况下执行序列化和反序列化。</p>
+<p>Data in Avro is always stored along with its corresponding schema, which means we can read serialized items at any time, whether or not we know the schema in advance. This allows us to perform serialization and deserialization without generating code.</p>
 
-<p>让我们回顾与上一节相同的示例，但不使用代码生成：我们将创建一些用户，将它们序列化为磁盘上的数据文件，然后读回文件并反序列化用户对象</p>
+<p>Let’s review the same example as the previous section, but without using code generation: we’ll create some users, serialize them to a data file on disk, and then read back the file and deserialize the user objects.</p>
 
-<h3 id="41-创建users用户">4.1 创建Users(用户)</h3>
+<h3 id="41-creating-users">4.1 Creating Users</h3>
 
-<p>首先，我们使用 Parser 来读取我们的模式定义并创建一个 Schema 对象。</p>
+<p>First, we use a Parser to read our schema definition and create a Schema object.</p>
 
 <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nc">Schema</span> <span class="n">schema</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Schema</span><span class="o">.</span><span class="na">Parser</span><span class="o">().</span><span class="na">parse</span><span class="o">(</span><span class="k">new</span> <span class="nc">File</span><span class="o">(</span><span class="s">"user.avsc"</span><span class="o">));</span>
 </code></pre></div></div>
 
-<p>使用这个Schema(模式)，让我们创建一些用户</p>
+<p>Using this schema, let’s create some users.</p>
 
 <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nc">GenericRecord</span> <span class="n">user1</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">GenericData</span><span class="o">.</span><span class="na">Record</span><span class="o">(</span><span class="n">schema</span><span class="o">);</span>
 <span class="n">user1</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">"name"</span><span class="o">,</span> <span class="s">"Alyssa"</span><span class="o">);</span>
@@ -369,15 +369,15 @@ Q_3(u,v,w)=[\sum_{i+j+k=n}M_{ijk}B^n_{i,j,k}(u,v,w)]^{-1}\sum_{i+j+k=n}M_{ijk}P_
 <span class="n">user2</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">"favorite_color"</span><span class="o">,</span> <span class="s">"red"</span><span class="o">);</span>
 </code></pre></div></div>
 
-<p>由于我们不使用代码生成，我们使用 <code class="language-plaintext highlighter-rouge">GenericRecords</code> 来表示用户。 <code class="language-plaintext highlighter-rouge">GenericRecord</code> 使用模式来验证我们是否只指定了有效字段。如果我们尝试设置一个不存在的字段（例如，<code class="language-plaintext highlighter-rouge">user1.put("favorite_animal", "cat")</code>），我们将在运行程序时收到 <code class="language-plaintext highlighter-rouge">AvroRuntimeException</code>。</p>
+<p>Since we’re not using code generation, we use <code class="language-plaintext highlighter-rouge">GenericRecords</code> to represent users. <code class="language-plaintext highlighter-rouge">GenericRecord</code> uses the schema to validate that we only specify valid fields. If we try to set a non-existent field (for example, <code class="language-plaintext highlighter-rouge">user1.put("favorite_animal", "cat")</code>), we’ll receive an <code class="language-plaintext highlighter-rouge">AvroRuntimeException</code> when running the program.</p>
 
-<p>请注意，我们没有设置 user1 最喜欢的颜色。由于该记录的类型为 <code class="language-plaintext highlighter-rouge">["string", "null"]</code>，我们可以将其设置为字符串或将其保留为 <code class="language-plaintext highlighter-rouge">null</code>；它本质上是可选的</p>
+<p>Note that we didn’t set user1’s favorite color. Since the type of this record is <code class="language-plaintext highlighter-rouge">["string", "null"]</code>, we can set it to a string or leave it as <code class="language-plaintext highlighter-rouge">null</code>; it’s essentially optional.</p>
 
-<h3 id="42-serializing序列化">4.2 Serializing(序列化)</h3>
+<h3 id="42-serializing">4.2 Serializing</h3>
 
-<p>现在我们已经创建了用户对象，对它们进行序列化和反序列化几乎与上面使用代码生成的示例相同。主要区别在于我们使用通用而不是特定的读取器和写入器。</p>
+<p>Now that we’ve created the user objects, serializing and deserializing them is almost the same as the example using code generation above. The main difference is that we use generic rather than specific readers and writers.</p>
 
-<p>首先，我们将我们的用户序列化到磁盘上的数据文件</p>
+<p>First, let’s serialize our users to a data file on disk.</p>
 
 <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Serialize user1 and user2 to disk</span>
 <span class="nc">File</span> <span class="n">file</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">File</span><span class="o">(</span><span class="s">"users.avro"</span><span class="o">);</span>
@@ -389,13 +389,13 @@ Q_3(u,v,w)=[\sum_{i+j+k=n}M_{ijk}B^n_{i,j,k}(u,v,w)]^{-1}\sum_{i+j+k=n}M_{ijk}P_
 <span class="n">dataFileWriter</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
 </code></pre></div></div>
 
-<p>我们创建了一个 <code class="language-plaintext highlighter-rouge">DatumWriter</code>，它将 Java 对象转换为内存中的序列化格式。由于我们不使用代码生成，我们创建了一个 <code class="language-plaintext highlighter-rouge">GenericDatumWriter</code>。它需要模式来确定如何编写 <code class="language-plaintext highlighter-rouge">GenericRecords</code> 并验证是否存在所有不可为空的字段。</p>
+<p>We created a <code class="language-plaintext highlighter-rouge">DatumWriter</code> that converts Java objects to in-memory serialized format. Since we’re not using code generation, we created a <code class="language-plaintext highlighter-rouge">GenericDatumWriter</code>. It needs the schema to determine how to write <code class="language-plaintext highlighter-rouge">GenericRecords</code> and to verify that all non-nullable fields are present.</p>
 
-<p>与代码生成示例一样，我们还创建了一个 <code class="language-plaintext highlighter-rouge">DataFileWriter</code>，它将序列化的记录以及模式写入 <code class="language-plaintext highlighter-rouge">dataFileWriter.create</code> 调用中指定的文件。我们通过调用 <code class="language-plaintext highlighter-rouge">dataFileWriter.append</code> 方法将用户写入文件。完成写入后，我们关闭数据文件。</p>
+<p>As with the code generation example, we also created a <code class="language-plaintext highlighter-rouge">DataFileWriter</code> that writes serialized records along with the schema to the file specified in the <code class="language-plaintext highlighter-rouge">dataFileWriter.create</code> call. We write users to the file by calling the <code class="language-plaintext highlighter-rouge">dataFileWriter.append</code> method. After writing is complete, we close the data file.</p>
 
-<h3 id="43-deserializing反序列化">4.3 Deserializing(反序列化)</h3>
+<h3 id="43-deserializing">4.3 Deserializing</h3>
 
-<p>最后，我们将反序列化刚刚创建的数据文件</p>
+<p>Finally, let’s deserialize the data file we just created.</p>
 
 <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Deserialize users from disk</span>
 <span class="nc">DatumReader</span><span class="o">&lt;</span><span class="nc">GenericRecord</span><span class="o">&gt;</span> <span class="n">datumReader</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">GenericDatumReader</span><span class="o">&lt;</span><span class="nc">GenericRecord</span><span class="o">&gt;(</span><span class="n">schema</span><span class="o">);</span>
@@ -410,31 +410,31 @@ Q_3(u,v,w)=[\sum_{i+j+k=n}M_{ijk}B^n_{i,j,k}(u,v,w)]^{-1}\sum_{i+j+k=n}M_{ijk}P_
 <span class="o">}</span>
 </code></pre></div></div>
 
-<p>这将会输出：</p>
+<p>This will output:</p>
 
 <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">{</span><span class="s">"name"</span><span class="o">:</span> <span class="s">"Alyssa"</span><span class="o">,</span> <span class="s">"favorite_number"</span><span class="o">:</span> <span class="mi">256</span><span class="o">,</span> <span class="s">"favorite_color"</span><span class="o">:</span> <span class="kc">null</span><span class="o">}</span>
 <span class="o">{</span><span class="s">"name"</span><span class="o">:</span> <span class="s">"Ben"</span><span class="o">,</span> <span class="s">"favorite_number"</span><span class="o">:</span> <span class="mi">7</span><span class="o">,</span> <span class="s">"favorite_color"</span><span class="o">:</span> <span class="s">"red"</span><span class="o">}</span>
 </code></pre></div></div>
 
-<p>反序列化与序列化非常相似。我们创建一个 <code class="language-plaintext highlighter-rouge">GenericDatumReader</code>，类似于我们在序列化中使用的 <code class="language-plaintext highlighter-rouge">GenericDatumWriter</code>，它将内存中的序列化项转换为 <code class="language-plaintext highlighter-rouge">GenericRecords</code>。我们将 <code class="language-plaintext highlighter-rouge">DatumReader</code>和之前创建的 <code class="language-plaintext highlighter-rouge">File</code> 传递给 <code class="language-plaintext highlighter-rouge">DataFileReader</code>，类似于 <code class="language-plaintext highlighter-rouge">DataFileWriter</code>，它读取 <code class="language-plaintext highlighter-rouge">writer</code> 使用的模式以及磁盘上文件中的数据。将使用文件中包含的写入者模式读取数据，并将读取器模式提供给 <code class="language-plaintext highlighter-rouge">GenericDatumReader</code>。编写者的模式需要知道写入字段的顺序，而读者的模式需要知道需要哪些字段以及如何填写自文件写入以来添加的字段的默认值。如果两个架构之间存在差异，则根据架构解析规范对其进行解析。</p>
+<p>Deserialization is very similar to serialization. We create a <code class="language-plaintext highlighter-rouge">GenericDatumReader</code>, similar to the <code class="language-plaintext highlighter-rouge">GenericDatumWriter</code> we used in serialization, which converts in-memory serialized items to <code class="language-plaintext highlighter-rouge">GenericRecords</code>. We pass the <code class="language-plaintext highlighter-rouge">DatumReader</code> and the previously created <code class="language-plaintext highlighter-rouge">File</code> to <code class="language-plaintext highlighter-rouge">DataFileReader</code>. Similar to <code class="language-plaintext highlighter-rouge">DataFileWriter</code>, it reads the schema used by the <code class="language-plaintext highlighter-rouge">writer</code> and the data from the file on disk. Data is read using the writer’s schema contained in the file, and the reader’s schema is provided to <code class="language-plaintext highlighter-rouge">GenericDatumReader</code>. The writer’s schema needs to know the order of fields written, while the reader’s schema needs to know which fields are required and how to fill in default values for fields added since the file was written. If there are differences between the two schemas, they are resolved according to the schema resolution specification.</p>
 
-<p>接下来，我们使用 <code class="language-plaintext highlighter-rouge">DataFileReader</code> 遍历序列化的用户并将反序列化的对象打印到标准输出。请注意我们如何执行迭代：我们创建一个 <code class="language-plaintext highlighter-rouge">GenericRecord</code> 对象，我们将当前反序列化的用户存储在其中，并将此记录对象传递给 <code class="language-plaintext highlighter-rouge">dataFileReader.next</code> 的每个调用。这是一种性能优化，允许 <code class="language-plaintext highlighter-rouge">DataFileReader</code> 重用相同的记录对象，而不是为每次迭代分配一个新的 <code class="language-plaintext highlighter-rouge">GenericRecord</code>，如果我们反序列化大型数据文件，这在对象分配和垃圾收集方面可能非常昂贵。虽然这种技术是遍历数据文件的标准方法，但如果性能不是问题，也可以使用 <code class="language-plaintext highlighter-rouge">for (GenericRecord user : dataFileReader)</code></p>
+<p>Next, we use <code class="language-plaintext highlighter-rouge">DataFileReader</code> to iterate through the serialized users and print the deserialized objects to standard output. Note how we perform the iteration: we create a <code class="language-plaintext highlighter-rouge">GenericRecord</code> object where we store the currently deserialized user, and pass this record object to each call to <code class="language-plaintext highlighter-rouge">dataFileReader.next</code>. This is a performance optimization that allows <code class="language-plaintext highlighter-rouge">DataFileReader</code> to reuse the same record object instead of allocating a new <code class="language-plaintext highlighter-rouge">GenericRecord</code> for each iteration, which can be very expensive in terms of object allocation and garbage collection if we’re deserializing a large data file. While this technique is the standard way to iterate through data files, if performance isn’t an issue, you can also use <code class="language-plaintext highlighter-rouge">for (GenericRecord user : dataFileReader)</code></p>
 
-<h3 id="44-编译并运行示例代码">4.4 编译并运行示例代码</h3>
+<h3 id="44-compiling-and-running-the-example-code">4.4 Compiling and Running the Example Code</h3>
 
-<p>此示例代码作为 Maven 项目包含在 Avro 文档的<code class="language-plaintext highlighter-rouge">examples/java-example</code> 目录中。在此目录中，执行以下命令来构建和运行示例：</p>
+<p>This example code is included as a Maven project in the Avro documentation’s <code class="language-plaintext highlighter-rouge">examples/java-example</code> directory. In this directory, run the following commands to build and run the example:</p>
 
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>mvn compile
 <span class="nv">$ </span>mvn <span class="nt">-q</span> <span class="nb">exec</span>:java <span class="nt">-Dexec</span>.mainClass<span class="o">=</span>example.GenericMain
-</code></pre></div></div>]]></content><author><name></name></author><category term="Avro" /><category term="数据序列化" /><summary type="html"><![CDATA[本文参考原版英文文档： Apache Avro™ 1.11.0 Getting Started (Java)]]></summary></entry><entry><title type="html">在Spring Boot中使用自定义过滤器和MDC实现高级日志记录</title><link href="https://lafengxiaoyu.github.io/blog/2026/spring-boot-mdc-logging/" rel="alternate" type="text/html" title="在Spring Boot中使用自定义过滤器和MDC实现高级日志记录" /><published>2026-03-08T02:00:00+00:00</published><updated>2026-03-08T02:00:00+00:00</updated><id>https://lafengxiaoyu.github.io/blog/2026/spring-boot-mdc-logging</id><content type="html" xml:base="https://lafengxiaoyu.github.io/blog/2026/spring-boot-mdc-logging/"><![CDATA[<p>在现代Web开发中，日志记录是必不可少的。通过记录日志，开发者可以追踪请求的流程、定位问题并进行性能调优。本文将介绍如何在Spring Boot项目中使用自定义过滤器结合MDC（Mapped Diagnostic Context）技术，实现高级日志记录功能。</p>
+</code></pre></div></div>]]></content><author><name></name></author><category term="Avro" /><category term="Data" /><category term="Serialization" /><summary type="html"><![CDATA[This article references the original English documentation: Apache Avro™ 1.11.0 Getting Started (Java)]]></summary></entry><entry><title type="html">Advanced Logging in Spring Boot Using Custom Filters and MDC</title><link href="https://lafengxiaoyu.github.io/blog/2026/spring-boot-mdc-logging/" rel="alternate" type="text/html" title="Advanced Logging in Spring Boot Using Custom Filters and MDC" /><published>2026-03-08T02:00:00+00:00</published><updated>2026-03-08T02:00:00+00:00</updated><id>https://lafengxiaoyu.github.io/blog/2026/spring-boot-mdc-logging</id><content type="html" xml:base="https://lafengxiaoyu.github.io/blog/2026/spring-boot-mdc-logging/"><![CDATA[<p>In modern web development, logging is essential. By logging, developers can trace request flows, locate issues, and perform performance tuning. This article introduces how to implement advanced logging functionality in Spring Boot projects using custom filters combined with MDC (Mapped Diagnostic Context) technology.</p>
 
-<h2 id="什么是mdc">什么是MDC？</h2>
+<h2 id="what-is-mdc">What is MDC?</h2>
 
-<p>MDC（Mapped Diagnostic Context）是SLF4J和Logback提供的功能，用于在同一线程中存储和获取诊断上下文信息。这些上下文信息可以是用户ID、请求ID等动态数据，能够帮助我们在日志中添加有用的调试信息。</p>
+<p>MDC (Mapped Diagnostic Context) is a feature provided by SLF4J and Logback for storing and retrieving diagnostic context information within the same thread. This context information can be dynamic data such as user IDs and request IDs, helping us add useful debugging information to logs.</p>
 
-<h2 id="代码示例">代码示例</h2>
+<h2 id="code-example">Code Example</h2>
 
-<p>下面的代码展示了如何配置和使用自定义过滤器来实现日志记录。</p>
+<p>The following code shows how to configure and use custom filters to implement logging.</p>
 
 <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">package</span> <span class="nn">com.xiaoyu.bootcustomfilters</span><span class="o">;</span>
 
@@ -481,9 +481,9 @@ Q_3(u,v,w)=[\sum_{i+j+k=n}M_{ijk}B^n_{i,j,k}(u,v,w)]^{-1}\sum_{i+j+k=n}M_{ijk}P_
 <span class="o">}</span>
 </code></pre></div></div>
 
-<h3 id="配置logback">配置Logback</h3>
+<h3 id="configuring-logback">Configuring Logback</h3>
 
-<p>要使上述MDC数据在日志中显示，我们需要配置Logback。在项目的资源目录中创建或修改<code class="language-plaintext highlighter-rouge">logback.xml</code>文件，添加如下配置：</p>
+<p>To make the MDC data appear in logs, we need to configure Logback. Create or modify the <code class="language-plaintext highlighter-rouge">logback.xml</code> file in the project’s resource directory and add the following configuration:</p>
 
 <div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span>
 <span class="nt">&lt;configuration&gt;</span>
@@ -499,39 +499,39 @@ Q_3(u,v,w)=[\sum_{i+j+k=n}M_{ijk}B^n_{i,j,k}(u,v,w)]^{-1}\sum_{i+j+k=n}M_{ijk}P_
 <span class="nt">&lt;/configuration&gt;</span>
 </code></pre></div></div>
 
-<h2 id="代码解析">代码解析</h2>
+<h2 id="code-analysis">Code Analysis</h2>
 
 <ol>
   <li>
-    <p><strong>FilterConfig类</strong>：这是一个配置类，使用<code class="language-plaintext highlighter-rouge">@Configuration</code>注解标记，表示这是一个Spring配置类。</p>
+    <p><strong>FilterConfig class</strong>: This is a configuration class marked with the <code class="language-plaintext highlighter-rouge">@Configuration</code> annotation, indicating it’s a Spring configuration class.</p>
   </li>
   <li>
-    <p><strong>loggingFilter方法</strong>：该方法返回一个<code class="language-plaintext highlighter-rouge">FilterRegistrationBean</code>，用来注册自定义过滤器。这里注册的是<code class="language-plaintext highlighter-rouge">TraceIdLoggingFilter</code>，并指定了过滤路径为<code class="language-plaintext highlighter-rouge">/users/*</code></p>
+    <p><strong>loggingFilter method</strong>: This method returns a <code class="language-plaintext highlighter-rouge">FilterRegistrationBean</code> used to register a custom filter. Here we register <code class="language-plaintext highlighter-rouge">TraceIdLoggingFilter</code> and specify the filter path as <code class="language-plaintext highlighter-rouge">/users/*</code></p>
   </li>
   <li>
-    <p><strong>TraceIdLoggingFilter内部类</strong>：这是实际的过滤器类，继承自<code class="language-plaintext highlighter-rouge">GenericFilter</code>。在<code class="language-plaintext highlighter-rouge">doFilter</code>方法中，我们使用MDC将一个唯一的<code class="language-plaintext highlighter-rouge">traceId</code>（追踪ID）添加到日志上下文中。在请求处理完毕后，MDC会自动清理这个<code class="language-plaintext highlighter-rouge">traceId</code></p>
+    <p><strong>TraceIdLoggingFilter inner class</strong>: This is the actual filter class extending <code class="language-plaintext highlighter-rouge">GenericFilter</code>. In the <code class="language-plaintext highlighter-rouge">doFilter</code> method, we use MDC to add a unique <code class="language-plaintext highlighter-rouge">traceId</code> (trace ID) to the logging context. After the request processing is complete, MDC automatically cleans up this <code class="language-plaintext highlighter-rouge">traceId</code></p>
   </li>
   <li>
-    <p><strong>generateTraceId方法</strong>：生成一个唯一的UUID作为<code class="language-plaintext highlighter-rouge">traceId</code></p>
+    <p><strong>generateTraceId method</strong>: Generates a unique UUID as the <code class="language-plaintext highlighter-rouge">traceId</code></p>
   </li>
   <li>
-    <p><strong>logback.xml文件</strong>：配置了一个控制台日志输出，并且日志格式中包含了<code class="language-plaintext highlighter-rouge">traceId</code>，从而每条日志都会打印出对应的追踪ID。</p>
+    <p><strong>logback.xml file</strong>: Configures console log output with the log format including <code class="language-plaintext highlighter-rouge">traceId</code>, so each log entry will print the corresponding trace ID.</p>
   </li>
 </ol>
 
-<h2 id="使用说明">使用说明</h2>
+<h2 id="usage">Usage</h2>
 
-<p>当Spring Boot应用启动并且有请求到达<code class="language-plaintext highlighter-rouge">/users/*</code>路径时，<code class="language-plaintext highlighter-rouge">TraceIdLoggingFilter</code>会自动为每个请求生成一个唯一的<code class="language-plaintext highlighter-rouge">traceId</code>，并将其放入MDC。这样，所有在该请求处理过程中生成的日志都会包含这个<code class="language-plaintext highlighter-rouge">traceId</code>，便于追踪和调试。</p>
+<p>When the Spring Boot application starts and a request arrives at the <code class="language-plaintext highlighter-rouge">/users/*</code> path, <code class="language-plaintext highlighter-rouge">TraceIdLoggingFilter</code> will automatically generate a unique <code class="language-plaintext highlighter-rouge">traceId</code> for each request and place it in MDC. This way, all logs generated during the request processing will include this <code class="language-plaintext highlighter-rouge">traceId</code>, making it easier to trace and debug.</p>
 
-<h3 id="结果展示">结果展示</h3>
+<h3 id="results">Results</h3>
 
-<p>在本地curl这个endpoint的时候可以收到回复</p>
+<p>You can curl this endpoint locally and receive a response:</p>
 
 <div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">curl</span><span class="w"> </span><span class="nx">http://localhost:8080/users</span><span class="w">
 </span><span class="p">[{</span><span class="s2">"id"</span><span class="p">:</span><span class="s2">"4d194d1f-187c-40a0-b0df-466d1561248f"</span><span class="p">,</span><span class="s2">"name"</span><span class="p">:</span><span class="s2">"User1"</span><span class="p">,</span><span class="s2">"email"</span><span class="p">:</span><span class="s2">"user1@test.com"</span><span class="p">},{</span><span class="s2">"id"</span><span class="p">:</span><span class="s2">"0ad8c605-84fa-472f-a7c4-d5c58c10495e"</span><span class="p">,</span><span class="s2">"name"</span><span class="p">:</span><span class="s2">"User2"</span><span class="p">,</span><span class="s2">"email"</span><span class="p">:</span><span class="s2">"user2@test.com"</span><span class="p">},{</span><span class="s2">"id"</span><span class="p">:</span><span class="s2">"bdb6e551-4e6c-44bb-b665-44f4d943975f"</span><span class="p">,</span><span class="s2">"name"</span><span class="p">:</span><span class="s2">"User3"</span><span class="p">,</span><span class="s2">"email"</span><span class="p">:</span><span class="s2">"user3@test.com"</span><span class="p">}]</span><span class="w">
 </span></code></pre></div></div>
 
-<p>因为这个call里调用了<code class="language-plaintext highlighter-rouge">users/</code>，所以会在log里输出如下</p>
+<p>Since this call invokes <code class="language-plaintext highlighter-rouge">users/</code>, the log output will be as follows:</p>
 
 <div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="w">
   </span><span class="o">.</span><span class="w">   </span><span class="err">____</span><span class="w">          </span><span class="err">_</span><span class="w">            </span><span class="err">__</span><span class="w"> </span><span class="err">_</span><span class="w"> </span><span class="err">_</span><span class="w">
@@ -545,14 +545,14 @@ Q_3(u,v,w)=[\sum_{i+j+k=n}M_{ijk}B^n_{i,j,k}(u,v,w)]^{-1}\sum_{i+j+k=n}M_{ijk}P_
 val
 </span></code></pre></div></div>
 
-<p>如果多次call这个endpoint会多次打印<code class="language-plaintext highlighter-rouge">val</code></p>
+<p>If you call this endpoint multiple times, <code class="language-plaintext highlighter-rouge">val</code> will be printed multiple times.</p>
 
-<p>另外我已经把整个package上传到了github，欢迎查看源码 <a href="https://github.com/lafengxiaoyu/MDC_blog/tree/main">github源码</a></p>
+<p>I have also uploaded the entire package to GitHub, welcome to check the source code <a href="https://github.com/lafengxiaoyu/MDC_blog/tree/main">GitHub source code</a></p>
 
-<h2 id="参考文献">参考文献</h2>
+<h2 id="references">References</h2>
 
 <ul>
   <li><a href="https://www.baeldung.com/mdc-in-log4j-2-logback">Improved Java Logging with Mapped Diagnostic Context (MDC)</a></li>
-  <li><a href="https://juejin.cn/post/7200549600590282789">logback-spring.xml配置文件标签（超详解）</a></li>
+  <li><a href="https://juejin.cn/post/7200549600590282789">logback-spring.xml configuration file tags (detailed)</a></li>
   <li><a href="https://www.baeldung.com/spring-boot-add-filter?__cf_chl_tk=zV7PJjjl3sWV2hfVYFaIwDMLSOjtkO930PqvOCKQ-1722198116-0.0.1.1-7465">How to Define a Spring Boot Filter?</a></li>
-</ul>]]></content><author><name></name></author><category term="Spring" /><category term="Boot" /><category term="日志记录" /><summary type="html"><![CDATA[在现代Web开发中，日志记录是必不可少的。通过记录日志，开发者可以追踪请求的流程、定位问题并进行性能调优。本文将介绍如何在Spring Boot项目中使用自定义过滤器结合MDC（Mapped Diagnostic Context）技术，实现高级日志记录功能。]]></summary></entry></feed>
+</ul>]]></content><author><name></name></author><category term="Spring" /><category term="Boot" /><category term="Logging" /><summary type="html"><![CDATA[In modern web development, logging is essential. By logging, developers can trace request flows, locate issues, and perform performance tuning. This article introduces how to implement advanced logging functionality in Spring Boot projects using custom filters combined with MDC (Mapped Diagnostic Context) technology.]]></summary></entry></feed>
