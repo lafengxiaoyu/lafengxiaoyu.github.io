@@ -1007,6 +1007,69 @@ nav[data-toggle="toc"] {
   }
 }
 
+/* Guestbook */
+.visitor-map-container {
+  margin: 2rem 0;
+  padding: 1rem;
+  text-align: center;
+
+  img {
+    max-width: 100%;
+    height: auto;
+  }
+}
+
+.map-note {
+  text-align: center;
+  margin-bottom: 2rem;
+
+  small {
+    color: var(--global-text-color-light);
+  }
+}
+
+.guestbook-messages {
+  margin-top: 2rem;
+
+  .message {
+    background-color: var(--global-card-bg-color);
+    border: 1px solid var(--global-divider-color);
+    border-radius: 8px;
+    padding: 1.5rem;
+    margin-bottom: 1rem;
+    transition: all 0.3s ease;
+
+    &:hover {
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .message-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.75rem;
+      border-bottom: 1px solid var(--global-divider-color);
+      padding-bottom: 0.5rem;
+
+      strong {
+        color: var(--global-theme-color);
+        font-size: 1.1rem;
+      }
+
+      .message-date {
+        color: var(--global-text-color-light);
+        font-size: 0.875rem;
+      }
+    }
+
+    .message-content {
+      color: var(--global-text-color);
+      line-height: 1.6;
+      font-size: 1rem;
+    }
+  }
+}
+
 /* small screens */
 @media (max-width: 576px) {
   /* override stickyness so that the navigation does not follow scrolling */
