@@ -1,12 +1,11 @@
 ---
+layout: page
 title: "NL Words - 荷兰语单词学习应用"
-collection: projects
-permalink: /projects/nl-words
-date: 2025-01-01
 description: A modern Dutch vocabulary learning platform with interactive cards and progress tracking.
-github: https://github.com/lafengxiaoyu/nl-words
 img: assets/img/projects/nl-words/截屏2026-03-08 11.02.36.png
 importance: 1
+category: work
+github: https://github.com/lafengxiaoyu/nl-words
 ---
 
 A modern Dutch language learning application built with React, TypeScript, and Vite.
